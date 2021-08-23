@@ -51,7 +51,7 @@ public class TransformXPath extends TransformSpi {
 
     /** Field implementedTransformURI */
     public static final String implementedTransformURI = Transforms.TRANSFORM_XPATH;
-    
+
     /**
      * Method engineGetURI
      *
@@ -100,7 +100,7 @@ public class TransformXPath extends TransformSpi {
                     DOMException.HIERARCHY_REQUEST_ERR, "Text must be in ds:Xpath"
                 );
             }
-            
+
             XPathFactory xpathFactory = XPathFactory.newInstance();
             XPathAPI xpathAPIInstance = xpathFactory.newXPathAPI();
             input.addNodeFilter(new XPathNodeFilter(xpathElement, xpathnode, str, xpathAPIInstance));
@@ -120,12 +120,12 @@ public class TransformXPath extends TransformSpi {
     }
 
     static class XPathNodeFilter implements NodeFilter {
-        
+
         XPathAPI xPathAPI;
-        Node xpathnode; 
+        Node xpathnode;
         Element xpathElement;
         String str;
-        
+
         XPathNodeFilter(Element xpathElement, Node xpathnode, String str, XPathAPI xPathAPI) {
             this.xpathnode = xpathnode;
             this.str = str;
@@ -136,7 +136,7 @@ public class TransformXPath extends TransformSpi {
         /**
          * @see org.apache.xml.security.signature.NodeFilter#isNodeInclude(org.w3c.dom.Node)
          */
-        public int isNodeInclude(Node currentNode) {			
+        public int isNodeInclude(Node currentNode) {
             try {
                 boolean include = xPathAPI.evaluate(currentNode, xpathnode, str, xpathElement);
                 if (include) {
@@ -144,17 +144,13 @@ public class TransformXPath extends TransformSpi {
                 }
                 return 0;
             } catch (TransformerException e) {
-                Object[] eArgs = {currentNode};
-                throw new XMLSecurityRuntimeException("signature.Transform.node", eArgs, e);
-            } catch (Exception e) {
-                Object[] eArgs = {currentNode, Short.valueOf(currentNode.getNodeType())};
-                throw new XMLSecurityRuntimeException("signature.Transform.nodeAndType",eArgs, e);
+                throw new XMLSecurityRuntimeException("signature.Transform.XPathError");
             }
         }
-        
+
         public int isNodeIncludeDO(Node n, int level) {
             return isNodeInclude(n);
         }
-        
+
     }
 }
