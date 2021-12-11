@@ -25,6 +25,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.signature.XMLSignatureInput;
 import org.apache.xml.security.utils.resolver.ResourceResolverException;
@@ -44,8 +46,7 @@ import org.w3c.dom.Attr;
 public class OfflineResolver extends ResourceResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(OfflineResolver.class.getName());
+    static Logger log = Logger.getLogger(OfflineResolver.class.getName());
     
     /** Field _uriMap */
     static Map<String, String> _uriMap = null;
@@ -106,11 +107,11 @@ public class OfflineResolver extends ResourceResolverSpi {
             if (OfflineResolver._uriMap.containsKey(URI)) {
                 String newURI = (String) OfflineResolver._uriMap.get(URI);
 
-                log.debug("Mapped " + URI + " to " + newURI);
+                log.log(Level.FINE, "Mapped " + URI + " to " + newURI);
 
                 InputStream is = new FileInputStream(newURI);
 
-                log.debug("Available bytes = " + is.available());
+                log.log(Level.FINE, "Available bytes = " + is.available());
 
                 XMLSignatureInput result = new XMLSignatureInput(is);
 
@@ -147,7 +148,7 @@ public class OfflineResolver extends ResourceResolverSpi {
         try {
             uriNew = getNewURI(uri.getNodeValue(), BaseURI);
             if (uriNew.getScheme().equals("http")) {
-                log.debug("I state that I can resolve " + uriNew.toString());
+                log.log(Level.FINE, "I state that I can resolve " + uriNew.toString());
                 return true;
             }
 

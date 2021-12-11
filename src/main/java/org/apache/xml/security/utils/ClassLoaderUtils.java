@@ -25,6 +25,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class is extremely useful for loading resources and classes in a fault
@@ -35,8 +37,7 @@ import java.util.List;
 public final class ClassLoaderUtils {
     
     /** {@link org.apache.commons.logging} logging facility */
-    private static final org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ClassLoaderUtils.class);
+    private static final Logger log = Logger.getLogger(ClassLoaderUtils.class.getName());
     
     private ClassLoaderUtils() {
     }
@@ -120,8 +121,8 @@ public final class ClassLoaderUtils {
         try {
             urls = Thread.currentThread().getContextClassLoader().getResources(resourceName);
         } catch (IOException e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, e.toString());
             }
             //ignore
         }
@@ -133,8 +134,8 @@ public final class ClassLoaderUtils {
                         resourceName.substring(1)
                     );
             } catch (IOException e) {
-                if (log.isDebugEnabled()) {
-                    log.debug(e);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, e.toString());
                 }
                 // ignore
             }
@@ -148,8 +149,8 @@ public final class ClassLoaderUtils {
             try {
                 urls = cluClassloader.getResources(resourceName);
             } catch (IOException e) {
-                if (log.isDebugEnabled()) {
-                    log.debug(e);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, e.toString());
                 }
                 // ignore
             }
@@ -159,8 +160,8 @@ public final class ClassLoaderUtils {
             try {
                 urls = cluClassloader.getResources(resourceName.substring(1));
             } catch (IOException e) {
-                if (log.isDebugEnabled()) {
-                    log.debug(e);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, e.toString());
                 }
                 // ignore
             }
@@ -173,8 +174,8 @@ public final class ClassLoaderUtils {
                 try {
                     urls = cl.getResources(resourceName);
                 } catch (IOException e) {
-                    if (log.isDebugEnabled()) {
-                        log.debug(e);
+                    if (log.isLoggable(Level.FINE)) {
+                        log.log(Level.FINE, e.toString());
                     }
                     // ignore
                 }
@@ -212,8 +213,8 @@ public final class ClassLoaderUtils {
         try {
             return (url != null) ? url.openStream() : null;
         } catch (IOException e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, e.toString());
             }
             return null;
         }
@@ -242,8 +243,8 @@ public final class ClassLoaderUtils {
                 return cl.loadClass(className);
             }            
         } catch (ClassNotFoundException e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, e.toString());
             }
             //ignore
         }
@@ -264,8 +265,8 @@ public final class ClassLoaderUtils {
                     return callingClass.getClassLoader().loadClass(className);
                 }
             }
-            if (log.isDebugEnabled()) {
-                log.debug(ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, ex.toString());
             }
             throw ex;
         }

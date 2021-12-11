@@ -23,6 +23,9 @@ import org.apache.xml.security.signature.XMLSignatureException;
 import org.apache.xml.security.utils.resolver.ResourceResolverSpi;
 import org.apache.xml.security.utils.resolver.implementations.ResolverAnonymous;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * This test is to ensure interoperability with the examples provided by the IAIK
  * XML Signature implementation. Thanks to Gregor Karlinger who provided these
@@ -34,8 +37,7 @@ import org.apache.xml.security.utils.resolver.implementations.ResolverAnonymous;
 public class IAIKTest extends InteropTestBase {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(IAIKTest.class.getName());
+    static Logger log = Logger.getLogger(IAIKTest.class.getName());
 
     /** Field gregorsDir */
     static String gregorsDir = "src/test/resources/at/iaik/ixsil/";
@@ -74,7 +76,7 @@ public class IAIKTest extends InteropTestBase {
             this.verifyHMAC(filename, resolver, followManifests, hmacKey);
             fail("HMACOutputLength Exception not caught");
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         } catch (XMLSignatureException ex) {
             if (ex.getMsgID().equals("algorithms.HMACOutputLengthMin")) {
@@ -103,13 +105,13 @@ public class IAIKTest extends InteropTestBase {
         try {
             verify = this.verifyHMAC(filename, resolver, followManifests, hmacKey);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
 
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -132,13 +134,13 @@ public class IAIKTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Core validation crashed for " + filename);
+            log.log(Level.SEVERE, "Core validation crashed for " + filename);
 
             throw ex;
         }
 
         if (!verify) {
-            log.error("Core validation failed for " + filename);
+            log.log(Level.SEVERE, "Core validation failed for " + filename);
         }
 
         assertTrue("Core validation failed for " + filename, verify);
@@ -161,13 +163,13 @@ public class IAIKTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
 
             throw ex;
         }
 
         if (!verify) {
-            log.error("Following the ds:Manifest failed for " + filename);
+            log.log(Level.SEVERE, "Following the ds:Manifest failed for " + filename);
         }
 
         assertTrue("Following the ds:Manifest failed for " + filename, verify);
@@ -190,13 +192,13 @@ public class IAIKTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
 
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue("Verification failed for " + filename, verify);
@@ -222,13 +224,13 @@ public class IAIKTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
 
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -251,13 +253,13 @@ public class IAIKTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
 
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -280,13 +282,13 @@ public class IAIKTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
 
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -309,13 +311,13 @@ public class IAIKTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
 
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -337,13 +339,13 @@ public class IAIKTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
 
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -367,13 +369,13 @@ public class IAIKTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
 
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -395,13 +397,13 @@ public class IAIKTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
 
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);

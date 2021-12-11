@@ -88,11 +88,11 @@ public class OfflineResolver extends ResourceResolverSpi {
             if (OfflineResolver._uriMap.containsKey(URI)) {
                 String newURI = OfflineResolver._uriMap.get(URI);
 
-                log.debug("Mapped " + URI + " to " + newURI);
+                log.log(Level.FINE, "Mapped " + URI + " to " + newURI);
 
                 InputStream is = new FileInputStream(newURI);
 
-                log.debug("Available bytes = " + is.available());
+                log.log(Level.FINE, "Available bytes = " + is.available());
 
                 XMLSignatureInput result = new XMLSignatureInput(is);
 
@@ -128,11 +128,11 @@ public class OfflineResolver extends ResourceResolverSpi {
         try {
             URI uriNew = getNewURI(uri.getNodeValue(), BaseURI);
             if (uriNew.getScheme().equals("http")) {
-                log.debug("I state that I can resolve " + uriNew.toString());
+                log.log(Level.FINE, "I state that I can resolve " + uriNew.toString());
                 return true;
             }
 
-            log.debug("I state that I can't resolve " + uriNew.toString());
+            log.log(Level.FINE, "I state that I can't resolve " + uriNew.toString());
         } catch (URISyntaxException ex) {
             //
         }

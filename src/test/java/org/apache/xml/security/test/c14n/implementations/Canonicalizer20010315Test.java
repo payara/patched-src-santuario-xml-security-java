@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -64,8 +66,7 @@ import org.xml.sax.SAXException;
 public class Canonicalizer20010315Test extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(Canonicalizer20010315Test.class.getName());
+    static Logger log = Logger.getLogger(Canonicalizer20010315Test.class.getName());
 
     static {
         org.apache.xml.security.Init.init();
@@ -687,7 +688,7 @@ public class Canonicalizer20010315Test extends org.junit.Assert {
 
         } catch (CanonicalizationException cex) {
             // if we reach this point - good.
-            log.debug("We catched the C14nEx, that's good: " + cex.getMessage());
+            log.log(Level.FINE, "We catched the C14nEx, that's good: " + cex.getMessage());
             weCatchedTheRelativeNS = true;
         }
 
@@ -1086,7 +1087,7 @@ public class Canonicalizer20010315Test extends org.junit.Assert {
             FileOutputStream fos = new FileOutputStream(f);
 
             fos.write(c14nBytes);
-            log.debug("Wrote erroneous result to file " + f.toURI().toURL().toString());
+            log.log(Level.FINE, "Wrote erroneous result to file " + f.toURI().toURL().toString());
             assertEquals(new String(refBytes),new String(c14nBytes));
             fos.close();
         }

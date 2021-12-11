@@ -19,6 +19,7 @@
 package org.apache.xml.security.test.utils;
 
 import java.io.ByteArrayOutputStream;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.utils.Base64;
 import org.apache.xml.security.utils.XMLUtils;
@@ -32,8 +33,7 @@ import org.apache.xml.security.utils.XMLUtils;
 public class Base64Test extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(Base64Test.class.getName());
+    static Logger log = Logger.getLogger(Base64Test.class.getName());
     
     static {
         org.apache.xml.security.Init.init();

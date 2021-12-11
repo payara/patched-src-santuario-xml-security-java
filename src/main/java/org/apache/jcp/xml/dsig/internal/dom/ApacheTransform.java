@@ -28,6 +28,8 @@ import java.io.OutputStream;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -54,8 +56,7 @@ public abstract class ApacheTransform extends TransformService {
         org.apache.xml.security.Init.init();
     }
 
-    private static org.apache.commons.logging.Log log =
-        org.apache.commons.logging.LogFactory.getLog(ApacheTransform.class);
+    private static Logger log = Logger.getLogger(ApacheTransform.class.getName());
     private Transform apacheTransform;
     protected Document ownerDoc;
     protected Element transformElem;
@@ -136,8 +137,8 @@ public abstract class ApacheTransform extends TransformService {
                 apacheTransform.setElement(transformElem, xc.getBaseURI());
                 boolean secVal = Utils.secureValidation(xc);
                 apacheTransform.setSecureValidation(secVal);
-                if (log.isDebugEnabled()) {
-                    log.debug("Created transform for algorithm: " +
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Created transform for algorithm: " +
                             getAlgorithm());
                 }
             } catch (Exception ex) {
@@ -157,17 +158,17 @@ public abstract class ApacheTransform extends TransformService {
 
         XMLSignatureInput in;
         if (data instanceof ApacheData) {
-            if (log.isDebugEnabled()) {
-                log.debug("ApacheData = true");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "ApacheData = true");
             }
             in = ((ApacheData)data).getXMLSignatureInput();
         } else if (data instanceof NodeSetData) {
-            if (log.isDebugEnabled()) {
-                log.debug("isNodeSet() = true");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "isNodeSet() = true");
             }
             if (data instanceof DOMSubTreeData) {
-                if (log.isDebugEnabled()) {
-                    log.debug("DOMSubTreeData = true");
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "DOMSubTreeData = true");
                 }
                 DOMSubTreeData subTree = (DOMSubTreeData)data;
                 in = new XMLSignatureInput(subTree.getRoot());
@@ -179,8 +180,8 @@ public abstract class ApacheTransform extends TransformService {
                 in = new XMLSignatureInput(nodeSet);
             }
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("isNodeSet() = false");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "isNodeSet() = false");
             }
             try {
                 in = new XMLSignatureInput

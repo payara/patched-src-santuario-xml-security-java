@@ -35,6 +35,8 @@ import java.io.OutputStream;
 import java.io.IOException;
 import java.security.Provider;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -56,8 +58,8 @@ public final class DOMSignedInfo extends DOMStructure implements SignedInfo {
      */
     public static final int MAXIMUM_REFERENCE_COUNT = 30;
 
-    private static org.apache.commons.logging.Log log =
-        org.apache.commons.logging.LogFactory.getLog(DOMSignedInfo.class);
+    private static Logger log =
+            Logger.getLogger(DOMSignedInfo.class.getName());
     
     /** Signature - NOT Recommended RSAwithMD5 */
     private static final String ALGO_ID_SIGNATURE_NOT_RECOMMENDED_RSA_MD5 = 
@@ -231,8 +233,8 @@ public final class DOMSignedInfo extends DOMStructure implements SignedInfo {
         try {
             os.flush();
         } catch (IOException e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, e.toString());
             }
             // Impossible
         }
@@ -240,14 +242,14 @@ public final class DOMSignedInfo extends DOMStructure implements SignedInfo {
         byte[] signedInfoBytes = bos.toByteArray();
 
         // this whole block should only be done if logging is enabled
-        if (log.isDebugEnabled()) {
-            log.debug("Canonicalized SignedInfo:"); 
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Canonicalized SignedInfo:");
             StringBuilder sb = new StringBuilder(signedInfoBytes.length);
             for (int i = 0; i < signedInfoBytes.length; i++) {
                 sb.append((char)signedInfoBytes[i]);
             }
-            log.debug(sb.toString());
-            log.debug("Data to be signed/verified:" + Base64.encode(signedInfoBytes));
+            log.log(Level.FINE, sb.toString());
+            log.log(Level.FINE, "Data to be signed/verified:" + Base64.encode(signedInfoBytes));
         }
 
         this.canonData = new ByteArrayInputStream(signedInfoBytes);
@@ -255,8 +257,8 @@ public final class DOMSignedInfo extends DOMStructure implements SignedInfo {
         try {
             os.close();
         } catch (IOException e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e.getMessage(), e);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, e.getMessage(), e);
             }
             // Impossible
         }

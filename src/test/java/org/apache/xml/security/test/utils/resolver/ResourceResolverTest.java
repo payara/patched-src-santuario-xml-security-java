@@ -19,6 +19,7 @@
 package org.apache.xml.security.test.utils.resolver;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.utils.XMLUtils;
 import org.apache.xml.security.utils.resolver.ResourceResolver;
@@ -33,9 +34,7 @@ import org.w3c.dom.Document;
 public class ResourceResolverTest extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog
-            (ResourceResolverTest.class.getName());
+    static Logger log = Logger.getLogger(ResourceResolverTest.class.getName());
     
     static {
         org.apache.xml.security.Init.init();

@@ -19,6 +19,7 @@
 package org.apache.xml.security.test.secure_val;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.signature.Manifest;
@@ -34,8 +35,7 @@ import org.w3c.dom.Element;
 public class ForbiddenRefCountTest extends InteropTestBase {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ForbiddenRefCountTest.class.getName());
+    static Logger log = Logger.getLogger(ForbiddenRefCountTest.class.getName());
 
     static {
         org.apache.xml.security.Init.init();

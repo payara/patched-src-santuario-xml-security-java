@@ -23,6 +23,8 @@ import java.io.OutputStream;
 import java.security.Key;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
 
@@ -161,8 +163,7 @@ public final class XMLSignature extends SignatureElementProxy {
         "http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512";
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(XMLSignature.class);
+    private static Logger log = Logger.getLogger(XMLSignature.class.getName());
     
     /** ds:Signature.ds:SignedInfo element */
     private SignedInfo signedInfo;
@@ -617,8 +618,8 @@ public final class XMLSignature extends SignatureElementProxy {
                     try {
                         so.close();
                     } catch (IOException ex) {
-                        if (log.isDebugEnabled()) {
-                            log.debug(ex);
+                        if (log.isLoggable(Level.FINE)) {
+                            log.log(Level.FINE, ex.toString());
                         }
                     }
                 }
@@ -705,11 +706,11 @@ public final class XMLSignature extends SignatureElementProxy {
             //create a SignatureAlgorithms from the SignatureMethod inside
             //SignedInfo. This is used to validate the signature.
             SignatureAlgorithm sa = si.getSignatureAlgorithm();               
-            if (log.isDebugEnabled()) {
-                log.debug("signatureMethodURI = " + sa.getAlgorithmURI());
-                log.debug("jceSigAlgorithm    = " + sa.getJCEAlgorithmString());
-                log.debug("jceSigProvider     = " + sa.getJCEProviderName());
-                log.debug("PublicKey = " + pk);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "signatureMethodURI = " + sa.getAlgorithmURI());
+                log.log(Level.FINE, "jceSigAlgorithm    = " + sa.getJCEAlgorithmString());
+                log.log(Level.FINE, "jceSigProvider     = " + sa.getJCEProviderName());
+                log.log(Level.FINE, "PublicKey = " + pk);
             }
             byte sigBytes[] = null;
             try {
@@ -724,8 +725,8 @@ public final class XMLSignature extends SignatureElementProxy {
                 // retrieve the byte[] from the stored signature
                 sigBytes = this.getSignatureValue();
             } catch (IOException ex) {
-                if (log.isDebugEnabled()) {
-                    log.debug(ex);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, ex.toString());
                 }
                 // Impossible...
             } catch (XMLSecurityException ex) {
@@ -735,7 +736,7 @@ public final class XMLSignature extends SignatureElementProxy {
             // have SignatureAlgorithm sign the input bytes and compare them to 
             // the bytes that were stored in the signature.
             if (!sa.verify(sigBytes)) {
-                log.warn("Signature verification failed.");
+                log.log(Level.WARNING, "Signature verification failed.");
                 return false;
             }
 

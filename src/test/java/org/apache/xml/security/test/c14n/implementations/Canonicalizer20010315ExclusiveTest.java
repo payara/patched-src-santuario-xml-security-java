@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -67,10 +68,7 @@ public class Canonicalizer20010315ExclusiveTest extends org.junit.Assert {
     }
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(
-            Canonicalizer20010315ExclusiveTest.class.getName()
-        );
+    static Logger log = Logger.getLogger(Canonicalizer20010315ExclusiveTest.class.getName());
 
     /** Field dbf */
     DocumentBuilderFactory dbf;

@@ -25,6 +25,7 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.xpath.XPath;
@@ -54,9 +55,7 @@ public class XmlSecTest extends org.junit.Assert {
     private static final String BASEDIR = 
         System.getProperty("basedir") == null ? "./": System.getProperty("basedir");
 
-    static org.apache.commons.logging.Log log =
-        org.apache.commons.logging.LogFactory.getLog
-            (XmlSecTest.class.getName());
+    static Logger log = Logger.getLogger(XmlSecTest.class.getName());
 
     @org.junit.Test
     public void testCheckXmlSignatureSoftwareStack() throws Exception {

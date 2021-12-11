@@ -23,6 +23,8 @@ import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
 
@@ -50,8 +52,8 @@ import org.w3c.dom.Element;
 public class EncryptedKeyResolver extends KeyResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(RSAKeyValueResolver.class);
+    private static Logger log =
+            Logger.getLogger(RSAKeyValueResolver.class.getName());
 
     private Key kek;
     private String algorithm;
@@ -108,8 +110,8 @@ public class EncryptedKeyResolver extends KeyResolverSpi {
     public javax.crypto.SecretKey engineLookupAndResolveSecretKey(
         Element element, String BaseURI, StorageResolver storage
     ) {
-        if (log.isDebugEnabled()) {
-            log.debug("EncryptedKeyResolver - Can I resolve " + element.getTagName());
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "EncryptedKeyResolver - Can I resolve " + element.getTagName());
         }
 
         if (element == null) {
@@ -120,8 +122,8 @@ public class EncryptedKeyResolver extends KeyResolverSpi {
         boolean isEncryptedKey = 
             XMLUtils.elementIsInEncryptionSpace(element, EncryptionConstants._TAG_ENCRYPTEDKEY);
         if (isEncryptedKey) {
-            if (log.isDebugEnabled()) {
-                log.debug("Passed an Encrypted Key");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Passed an Encrypted Key");
             }
             try {
                 XMLCipher cipher = XMLCipher.getInstance();
@@ -135,8 +137,8 @@ public class EncryptedKeyResolver extends KeyResolverSpi {
                 EncryptedKey ek = cipher.loadEncryptedKey(element);
                 key = (SecretKey) cipher.decryptKey(ek, algorithm);
             } catch (XMLEncryptionException e) {
-                if (log.isDebugEnabled()) {
-                    log.debug(e);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, e.toString());
                 }
             }
         }

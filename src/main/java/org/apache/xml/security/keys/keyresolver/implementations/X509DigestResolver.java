@@ -23,6 +23,8 @@ import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
 
@@ -45,8 +47,8 @@ import org.w3c.dom.Element;
 public class X509DigestResolver extends KeyResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(X509DigestResolver.class);
+    private static Logger log =
+            Logger.getLogger(X509DigestResolver.class.getName());
 
     /** {@inheritDoc}. */
     public boolean engineCanResolve(Element element, String baseURI, StorageResolver storage) {
@@ -79,8 +81,8 @@ public class X509DigestResolver extends KeyResolverSpi {
     public X509Certificate engineLookupResolveX509Certificate(Element element, String baseURI, StorageResolver storage)
         throws KeyResolverException {
 
-        if (log.isDebugEnabled()) {
-            log.debug("Can I resolve " + element.getTagName());
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Can I resolve " + element.getTagName());
         }
 
         if (!engineCanResolve(element, baseURI, storage)) {
@@ -90,8 +92,8 @@ public class X509DigestResolver extends KeyResolverSpi {
         try {
             return resolveCertificate(element, baseURI, storage);
         } catch (XMLSecurityException e) {
-            if (log.isDebugEnabled()) {
-                log.debug("XMLSecurityException", e);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "XMLSecurityException", e);
             }
         }
 
@@ -142,8 +144,8 @@ public class X509DigestResolver extends KeyResolverSpi {
                     byte[] certDigestBytes = XMLX509Digest.getDigestBytesFromCert(cert, keyInfoDigest.getAlgorithm());
 
                     if (Arrays.equals(keyInfoDigest.getDigestBytes(), certDigestBytes)) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Found certificate with: " + cert.getSubjectX500Principal().getName());
+                        if (log.isLoggable(Level.FINE)) {
+                            log.log(Level.FINE, "Found certificate with: " + cert.getSubjectX500Principal().getName());
                         }
                         return cert;
                     }
@@ -168,8 +170,8 @@ public class X509DigestResolver extends KeyResolverSpi {
         if (storage == null) {
             Object exArgs[] = { Constants._TAG_X509DIGEST };
             KeyResolverException ex = new KeyResolverException("KeyResolver.needStorageResolver", exArgs);
-            if (log.isDebugEnabled()) {
-                log.debug("", ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "", ex);
             }
             throw ex;
         }

@@ -19,6 +19,7 @@
 package org.apache.xml.security.test.signature;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
 
@@ -35,9 +36,7 @@ import org.apache.xml.security.utils.XMLUtils;
 public class HMACOutputLengthTest extends org.junit.Assert {
     
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log =
-        org.apache.commons.logging.LogFactory.getLog
-            (HMACOutputLengthTest.class.getName());
+    static Logger log = Logger.getLogger(HMACOutputLengthTest.class.getName());
     
     private static final String BASEDIR = 
         System.getProperty("basedir") == null ? "./": System.getProperty("basedir");

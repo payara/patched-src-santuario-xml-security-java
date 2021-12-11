@@ -24,6 +24,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -51,8 +53,7 @@ import org.xml.sax.SAXException;
 public class Canonicalizer11Test extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(Canonicalizer11Test.class.getName());
+    static Logger log = Logger.getLogger(Canonicalizer11Test.class.getName());
 
     static {
         org.apache.xml.security.Init.init();
@@ -404,7 +405,7 @@ public class Canonicalizer11Test extends org.junit.Assert {
             FileOutputStream fos = new FileOutputStream(f);
 
             fos.write(c14nBytes);
-            log.debug("Wrote erroneous result to file " + f.toURI().toURL().toString());
+            log.log(Level.FINE, "Wrote erroneous result to file " + f.toURI().toURL().toString());
             assertEquals(new String(refBytes), new String(c14nBytes));
             fos.close();
         }

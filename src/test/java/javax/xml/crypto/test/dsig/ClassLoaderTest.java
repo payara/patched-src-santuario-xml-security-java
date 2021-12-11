@@ -25,6 +25,8 @@ import java.net.URLClassLoader;
 import java.security.AccessController;
 import java.security.Provider;
 import java.security.Security;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.crypto.dsig.CanonicalizationMethod;
 import org.apache.jcp.xml.dsig.internal.dom.XMLDSigRI;
@@ -36,8 +38,7 @@ import org.apache.jcp.xml.dsig.internal.dom.XMLDSigRI;
  */
 public class ClassLoaderTest extends org.junit.Assert {
     
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ClassLoaderTest.class);
+    private static Logger log = Logger.getLogger(ClassLoaderTest.class.getName());
 
     @org.junit.Test
     public void testMultipleLoaders() throws Exception {
@@ -104,8 +105,8 @@ public class ClassLoaderTest extends org.junit.Assert {
         }
         long end = System.currentTimeMillis();
         long elapsed = end-start;
-        if (log.isDebugEnabled()) {
-            log.debug("Elapsed: " + elapsed);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Elapsed: " + elapsed);
         }
     }
 

@@ -21,6 +21,8 @@ package org.apache.xml.security.keys.keyresolver.implementations;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.SecretKey;
 import org.apache.xml.security.keys.keyresolver.KeyResolverException;
 import org.apache.xml.security.keys.keyresolver.KeyResolverSpi;
@@ -35,8 +37,7 @@ import org.w3c.dom.Element;
 public class SingleKeyResolver extends KeyResolverSpi
 {
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(SingleKeyResolver.class.getName());
+    private static Logger log = Logger.getLogger(SingleKeyResolver.class.getName());
 
     private String keyName;
     private PublicKey publicKey;
@@ -97,8 +98,8 @@ public class SingleKeyResolver extends KeyResolverSpi
     public PublicKey engineLookupAndResolvePublicKey(
         Element element, String baseURI, StorageResolver storage
     ) throws KeyResolverException {
-        if (log.isDebugEnabled()) {
-            log.debug("Can I resolve " + element.getTagName() + "?");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Can I resolve " + element.getTagName() + "?");
         }
 
         if (publicKey != null 
@@ -109,7 +110,7 @@ public class SingleKeyResolver extends KeyResolverSpi
             }
         }
 
-        log.debug("I can't");
+        log.log(Level.FINE, "I can't");
         return null;
     }
 
@@ -140,8 +141,8 @@ public class SingleKeyResolver extends KeyResolverSpi
     public SecretKey engineResolveSecretKey(
         Element element, String baseURI, StorageResolver storage
     ) throws KeyResolverException {
-        if (log.isDebugEnabled()) {
-            log.debug("Can I resolve " + element.getTagName() + "?");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Can I resolve " + element.getTagName() + "?");
         }
 
         if (secretKey != null
@@ -152,7 +153,7 @@ public class SingleKeyResolver extends KeyResolverSpi
             }
         }
 
-        log.debug("I can't");
+        log.log(Level.FINE, "I can't");
         return null;
     }
 
@@ -168,8 +169,8 @@ public class SingleKeyResolver extends KeyResolverSpi
     public PrivateKey engineLookupAndResolvePrivateKey(
         Element element, String baseURI, StorageResolver storage
     ) throws KeyResolverException {
-        if (log.isDebugEnabled()) {
-            log.debug("Can I resolve " + element.getTagName() + "?");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Can I resolve " + element.getTagName() + "?");
         }
 
         if (privateKey != null
@@ -180,7 +181,7 @@ public class SingleKeyResolver extends KeyResolverSpi
             }
         }
 
-        log.debug("I can't");
+        log.log(Level.FINE, "I can't");
         return null;
     }
 }

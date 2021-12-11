@@ -20,6 +20,8 @@ package org.apache.xml.security.utils.resolver;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.signature.XMLSignatureInput;
 import org.w3c.dom.Attr;
@@ -32,8 +34,8 @@ import org.w3c.dom.Attr;
 public abstract class ResourceResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ResourceResolverSpi.class);
+    private static Logger log =
+            Logger.getLogger(ResourceResolverSpi.class.getName());
 
     /** Field properties */
     protected java.util.Map<String, String> properties = null;
@@ -209,8 +211,8 @@ public abstract class ResourceResolverSpi {
                 && (ch1 == ':') && (ch2 == '/')
                 && (ch3 != '/'));
 
-            if (isDosFilename && log.isDebugEnabled()) {
-                log.debug("Found DOS filename: " + str);
+            if (isDosFilename && log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Found DOS filename: " + str);
             }
         }
 

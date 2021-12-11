@@ -32,6 +32,9 @@ import java.io.IOException;
 import java.security.*;
 import java.security.interfaces.DSAKey;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.w3c.dom.Element;
 
 import org.apache.xml.security.algorithms.implementations.SignatureECDSA;
@@ -45,8 +48,7 @@ import org.apache.jcp.xml.dsig.internal.SignerOutputStream;
  */
 public abstract class DOMSignatureMethod extends AbstractDOMSignatureMethod {
 
-    private static org.apache.commons.logging.Log log =
-        org.apache.commons.logging.LogFactory.getLog(DOMSignatureMethod.class);
+    private static Logger log = Logger.getLogger(DOMSignatureMethod.class.getName());
 
     private SignatureMethodParameterSpec params;
     private Signature signature;
@@ -186,11 +188,11 @@ public abstract class DOMSignatureMethod extends AbstractDOMSignatureMethod {
             }
         }
         signature.initVerify((PublicKey)key);
-        if (log.isDebugEnabled()) {
-            log.debug("Signature provider:" + signature.getProvider());
-            log.debug("Verifying with key: " + key);
-            log.debug("JCA Algorithm: " + getJCAAlgorithm());
-            log.debug("Signature Bytes length: " + sig.length);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Signature provider:" + signature.getProvider());
+            log.log(Level.FINE, "Verifying with key: " + key);
+            log.log(Level.FINE, "JCA Algorithm: " + getJCAAlgorithm());
+            log.log(Level.FINE, "Signature Bytes length: " + sig.length);
         }
         ((DOMSignedInfo)si).canonicalize(context,
                                          new SignerOutputStream(signature));
@@ -233,10 +235,10 @@ public abstract class DOMSignatureMethod extends AbstractDOMSignatureMethod {
             }
         }
         signature.initSign((PrivateKey)key);
-        if (log.isDebugEnabled()) {
-            log.debug("Signature provider:" + signature.getProvider());
-            log.debug("Signing with key: " + key);
-            log.debug("JCA Algorithm: " + getJCAAlgorithm());
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Signature provider:" + signature.getProvider());
+            log.log(Level.FINE, "Signing with key: " + key);
+            log.log(Level.FINE, "JCA Algorithm: " + getJCAAlgorithm());
         }
 
         ((DOMSignedInfo)si).canonicalize(context,

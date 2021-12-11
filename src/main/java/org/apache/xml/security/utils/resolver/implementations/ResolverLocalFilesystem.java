@@ -21,6 +21,8 @@ package org.apache.xml.security.utils.resolver.implementations;
 import java.io.FileInputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.signature.XMLSignatureInput;
 import org.apache.xml.security.utils.resolver.ResourceResolverContext;
@@ -35,8 +37,8 @@ public class ResolverLocalFilesystem extends ResourceResolverSpi {
     private static final int FILE_URI_LENGTH = "file:/".length();
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ResolverLocalFilesystem.class);
+    private static Logger log =
+            Logger.getLogger(ResolverLocalFilesystem.class.getName());
     
     @Override
     public boolean engineIsThreadSafe() {
@@ -116,24 +118,24 @@ public class ResolverLocalFilesystem extends ResourceResolverSpi {
         }
 
         try {
-            if (log.isDebugEnabled()) {
-                log.debug("I was asked whether I can resolve " + context.uriToResolve);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I was asked whether I can resolve " + context.uriToResolve);
             }
 
             if (context.uriToResolve.startsWith("file:") || context.baseUri.startsWith("file:")) {
-                if (log.isDebugEnabled()) {
-                    log.debug("I state that I can resolve " + context.uriToResolve);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "I state that I can resolve " + context.uriToResolve);
                 }
                 return true;
             }
         } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, e.toString());
             }
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("But I can't");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "But I can't");
         }
 
         return false;

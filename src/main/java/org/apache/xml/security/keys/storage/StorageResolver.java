@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.keys.storage.implementations.KeyStoreResolver;
 import org.apache.xml.security.keys.storage.implementations.SingleCertificateResolver;
@@ -35,8 +37,8 @@ import org.apache.xml.security.keys.storage.implementations.SingleCertificateRes
 public class StorageResolver {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(StorageResolver.class);
+    private static Logger log =
+            Logger.getLogger(StorageResolver.class.getName());
 
     /** Field storageResolvers */
     private List<StorageResolverSpi> storageResolvers = null;
@@ -86,7 +88,7 @@ public class StorageResolver {
         try {
             this.add(new KeyStoreResolver(keyStore));
         } catch (StorageResolverException ex) {
-            log.error("Could not add KeyStore because of: ", ex);
+            log.log(Level.SEVERE, "Could not add KeyStore because of: ", ex);
         }
     }
 

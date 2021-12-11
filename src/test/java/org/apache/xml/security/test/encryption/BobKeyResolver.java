@@ -20,6 +20,8 @@ package org.apache.xml.security.test.encryption;
 
 import java.security.cert.X509Certificate;
 import java.security.PublicKey;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
@@ -40,8 +42,7 @@ import org.w3c.dom.Element;
 public class BobKeyResolver extends KeyResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(BobKeyResolver.class.getName());
+    private static Logger log = Logger.getLogger(BobKeyResolver.class.getName());
 
     private KeyName _kn = null;
 
@@ -57,7 +58,7 @@ public class BobKeyResolver extends KeyResolverSpi {
         if (element == null) {
             return false;
         }
-        log.debug("Can I resolve " + element.getTagName());
+        log.log(Level.FINE, "Can I resolve " + element.getTagName());
 
         boolean isKeyName = XMLUtils.elementIsInSignatureSpace(element, Constants._TAG_KEYNAME);
         try {

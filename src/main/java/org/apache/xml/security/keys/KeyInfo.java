@@ -24,6 +24,8 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
 
@@ -90,8 +92,7 @@ import org.w3c.dom.Node;
 public class KeyInfo extends SignatureElementProxy {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(KeyInfo.class);
+    private static Logger log = Logger.getLogger(KeyInfo.class.getName());
 
     // We need at least one StorageResolver otherwise
     // the KeyResolvers would not be called.
@@ -817,27 +818,27 @@ public class KeyInfo extends SignatureElementProxy {
         PublicKey pk = this.getPublicKeyFromInternalResolvers();
 
         if (pk != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("I could find a key using the per-KeyInfo key resolvers");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I could find a key using the per-KeyInfo key resolvers");
             }
 
             return pk;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("I couldn't find a key using the per-KeyInfo key resolvers");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "I couldn't find a key using the per-KeyInfo key resolvers");
         }
 
         pk = this.getPublicKeyFromStaticResolvers();
 
         if (pk != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("I could find a key using the system-wide key resolvers");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I could find a key using the system-wide key resolvers");
             }
 
             return pk;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("I couldn't find a key using the system-wide key resolvers");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "I couldn't find a key using the system-wide key resolvers");
         }
 
         return null;
@@ -883,8 +884,8 @@ public class KeyInfo extends SignatureElementProxy {
      */
     PublicKey getPublicKeyFromInternalResolvers() throws KeyResolverException {
         for (KeyResolverSpi keyResolver : internalKeyResolvers) {
-            if (log.isDebugEnabled()) {
-                log.debug("Try " + keyResolver.getClass().getName());
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Try " + keyResolver.getClass().getName());
             }
             keyResolver.setSecureValidation(secureValidation);
             Node currentChild = this.constructionElement.getFirstChild();
@@ -920,28 +921,28 @@ public class KeyInfo extends SignatureElementProxy {
         X509Certificate cert = this.getX509CertificateFromInternalResolvers();
 
         if (cert != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("I could find a X509Certificate using the per-KeyInfo key resolvers");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I could find a X509Certificate using the per-KeyInfo key resolvers");
             }
 
             return cert;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("I couldn't find a X509Certificate using the per-KeyInfo key resolvers");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "I couldn't find a X509Certificate using the per-KeyInfo key resolvers");
         }
 
         // Then use the system-wide Resolvers
         cert = this.getX509CertificateFromStaticResolvers();
 
         if (cert != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("I could find a X509Certificate using the system-wide key resolvers");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I could find a X509Certificate using the system-wide key resolvers");
             }
 
             return cert;
         } 
-        if (log.isDebugEnabled()) {
-            log.debug("I couldn't find a X509Certificate using the system-wide key resolvers");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "I couldn't find a X509Certificate using the system-wide key resolvers");
         }
 
         return null;
@@ -957,10 +958,10 @@ public class KeyInfo extends SignatureElementProxy {
      */
     X509Certificate getX509CertificateFromStaticResolvers()
         throws KeyResolverException {
-        if (log.isDebugEnabled()) {
-            log.debug(
-                "Start getX509CertificateFromStaticResolvers() with " + KeyResolver.length() 
-                + " resolvers"
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE,
+                    "Start getX509CertificateFromStaticResolvers() with " + KeyResolver.length()
+                            + " resolvers"
             );
         }
         String uri = this.getBaseURI();
@@ -1006,16 +1007,16 @@ public class KeyInfo extends SignatureElementProxy {
      */
     X509Certificate getX509CertificateFromInternalResolvers()
         throws KeyResolverException {
-        if (log.isDebugEnabled()) {
-            log.debug(
-                "Start getX509CertificateFromInternalResolvers() with " 
-                + this.lengthInternalKeyResolver() + " resolvers"
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE,
+                    "Start getX509CertificateFromInternalResolvers() with "
+                            + this.lengthInternalKeyResolver() + " resolvers"
             );
         }
         String uri = this.getBaseURI();
         for (KeyResolverSpi keyResolver : internalKeyResolvers) {
-            if (log.isDebugEnabled()) {
-                log.debug("Try " + keyResolver.getClass().getName());
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Try " + keyResolver.getClass().getName());
             }
             keyResolver.setSecureValidation(secureValidation);
             X509Certificate cert = applyCurrentResolver(uri, keyResolver);
@@ -1036,27 +1037,27 @@ public class KeyInfo extends SignatureElementProxy {
         SecretKey sk = this.getSecretKeyFromInternalResolvers();
 
         if (sk != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("I could find a secret key using the per-KeyInfo key resolvers");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I could find a secret key using the per-KeyInfo key resolvers");
             }
 
             return sk;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("I couldn't find a secret key using the per-KeyInfo key resolvers");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "I couldn't find a secret key using the per-KeyInfo key resolvers");
         }
 
         sk = this.getSecretKeyFromStaticResolvers();
 
         if (sk != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("I could find a secret key using the system-wide key resolvers");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I could find a secret key using the system-wide key resolvers");
             }
 
             return sk;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("I couldn't find a secret key using the system-wide key resolvers");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "I couldn't find a secret key using the system-wide key resolvers");
         }
 
         return null;
@@ -1104,8 +1105,8 @@ public class KeyInfo extends SignatureElementProxy {
 
     SecretKey getSecretKeyFromInternalResolvers() throws KeyResolverException {
         for (KeyResolverSpi keyResolver : internalKeyResolvers) {
-            if (log.isDebugEnabled()) {
-                log.debug("Try " + keyResolver.getClass().getName());
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Try " + keyResolver.getClass().getName());
             }
             keyResolver.setSecureValidation(secureValidation);
             Node currentChild = this.constructionElement.getFirstChild();
@@ -1139,24 +1140,24 @@ public class KeyInfo extends SignatureElementProxy {
         PrivateKey pk = this.getPrivateKeyFromInternalResolvers();
 
         if (pk != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("I could find a private key using the per-KeyInfo key resolvers");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I could find a private key using the per-KeyInfo key resolvers");
             }
             return pk;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("I couldn't find a secret key using the per-KeyInfo key resolvers");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "I couldn't find a secret key using the per-KeyInfo key resolvers");
         }
 
         pk = this.getPrivateKeyFromStaticResolvers();
         if (pk != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("I could find a private key using the system-wide key resolvers");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I could find a private key using the system-wide key resolvers");
             }
             return pk;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("I couldn't find a private key using the system-wide key resolvers");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "I couldn't find a private key using the system-wide key resolvers");
         }
 
         return null;
@@ -1203,8 +1204,8 @@ public class KeyInfo extends SignatureElementProxy {
      */
     PrivateKey getPrivateKeyFromInternalResolvers() throws KeyResolverException {
         for (KeyResolverSpi keyResolver : internalKeyResolvers) {
-            if (log.isDebugEnabled()) {
-                log.debug("Try " + keyResolver.getClass().getName());
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Try " + keyResolver.getClass().getName());
             }
             keyResolver.setSecureValidation(secureValidation);
             Node currentChild = this.constructionElement.getFirstChild();

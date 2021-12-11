@@ -21,6 +21,7 @@ package org.apache.xml.security.test.transforms.implementations;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
@@ -48,8 +49,7 @@ public class TransformXSLTTest extends org.junit.Assert {
     private static final String STYLESHEET_FILE = "document-stylesheet.xml";
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(TransformXSLTTest.class.getName());
+    static Logger log = Logger.getLogger(TransformXSLTTest.class.getName());
     
     static {
         org.apache.xml.security.Init.init();

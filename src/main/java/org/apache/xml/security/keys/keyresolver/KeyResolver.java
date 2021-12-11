@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
 
@@ -50,8 +52,7 @@ import org.w3c.dom.Node;
 public class KeyResolver {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(KeyResolver.class);
+    private static Logger log = Logger.getLogger(KeyResolver.class.getName());
 
     /** Field resolverVector */
     private static List<KeyResolver> resolverVector = new CopyOnWriteArrayList<KeyResolver>();
@@ -100,8 +101,8 @@ public class KeyResolver {
 
                 throw new KeyResolverException("utils.resolver.noClass", exArgs);
             }
-            if (log.isDebugEnabled()) {
-                log.debug("check resolvability by class " + resolver.getClass());
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "check resolvability by class " + resolver.getClass());
             }
 
             X509Certificate cert = resolver.resolveX509Certificate(element, baseURI, storage);
@@ -141,8 +142,8 @@ public class KeyResolver {
 
                 throw new KeyResolverException("utils.resolver.noClass", exArgs);
             }
-            if (log.isDebugEnabled()) {
-                log.debug("check resolvability by class " + resolver.getClass());
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "check resolvability by class " + resolver.getClass());
             }
 
             PublicKey cert = resolver.resolvePublicKey(element, baseURI, storage);

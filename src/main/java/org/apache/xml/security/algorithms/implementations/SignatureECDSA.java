@@ -29,6 +29,8 @@ import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.SignatureException;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.algorithms.JCEMapper;
 import org.apache.xml.security.algorithms.SignatureAlgorithmSpi;
@@ -44,8 +46,8 @@ import org.apache.xml.security.utils.Base64;
 public abstract class SignatureECDSA extends SignatureAlgorithmSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(SignatureECDSA.class);
+    private static Logger log =
+            Logger.getLogger(SignatureECDSA.class.getName());
 
     /** @inheritDoc */
     public abstract String engineGetURI();
@@ -185,8 +187,8 @@ public abstract class SignatureECDSA extends SignatureAlgorithmSpi {
 
         String algorithmID = JCEMapper.translateURItoJCEID(this.engineGetURI());
 
-        if (log.isDebugEnabled()) {
-            log.debug("Created SignatureECDSA using " + algorithmID);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Created SignatureECDSA using " + algorithmID);
         }
         String provider = JCEMapper.getProviderId();
         try {
@@ -221,8 +223,8 @@ public abstract class SignatureECDSA extends SignatureAlgorithmSpi {
         try {
             byte[] jcebytes = SignatureECDSA.convertXMLDSIGtoASN1(signature);
 
-            if (log.isDebugEnabled()) {
-                log.debug("Called ECDSA.verify() on " + Base64.encode(signature));
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Called ECDSA.verify() on " + Base64.encode(signature));
             }
 
             return this.signatureAlgorithm.verify(jcebytes);
@@ -258,8 +260,8 @@ public abstract class SignatureECDSA extends SignatureAlgorithmSpi {
             } catch (Exception e) {
                 // this shouldn't occur, but if it does, restore previous
                 // Signature
-                if (log.isDebugEnabled()) {
-                    log.debug("Exception when reinstantiating Signature:" + e);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Exception when reinstantiating Signature:" + e);
                 }
                 this.signatureAlgorithm = sig;
             }

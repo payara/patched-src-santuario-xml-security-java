@@ -23,6 +23,8 @@ import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.algorithms.implementations.IntegrityHmac;
 import org.apache.xml.security.algorithms.implementations.SignatureBaseRSA;
@@ -48,8 +50,7 @@ import org.w3c.dom.Element;
 public class SignatureAlgorithm extends Algorithm {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(SignatureAlgorithm.class);
+    private static Logger log = Logger.getLogger(SignatureAlgorithm.class.getName());
 
     /** All available algorithm classes are registered here */
     private static Map<String, Class<? extends SignatureAlgorithmSpi>> algorithmHash = 
@@ -145,9 +146,9 @@ public class SignatureAlgorithm extends Algorithm {
         try {
             Class<? extends SignatureAlgorithmSpi> implementingClass = 
                 algorithmHash.get(algorithmURI);
-            if (log.isDebugEnabled()) {
-                log.debug("Create URI \"" + algorithmURI + "\" class \""
-                   + implementingClass + "\"");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Create URI \"" + algorithmURI + "\" class \""
+                        + implementingClass + "\"");
             }
             return implementingClass.newInstance();   
         }  catch (IllegalAccessException ex) {
@@ -327,8 +328,8 @@ public class SignatureAlgorithm extends Algorithm {
        throws AlgorithmAlreadyRegisteredException, ClassNotFoundException, 
            XMLSignatureException {
         JavaUtils.checkRegisterPermission();
-        if (log.isDebugEnabled()) {
-            log.debug("Try to register " + algorithmURI + " " + implementingClass);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Try to register " + algorithmURI + " " + implementingClass);
         }
 
         // are we already registered?
@@ -365,8 +366,8 @@ public class SignatureAlgorithm extends Algorithm {
        throws AlgorithmAlreadyRegisteredException, ClassNotFoundException, 
            XMLSignatureException {
         JavaUtils.checkRegisterPermission();
-        if (log.isDebugEnabled()) {
-            log.debug("Try to register " + algorithmURI + " " + implementingClass);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Try to register " + algorithmURI + " " + implementingClass);
         }
 
         // are we already registered?

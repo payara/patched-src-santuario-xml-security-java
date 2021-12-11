@@ -19,6 +19,7 @@
 package org.apache.xml.security.test.secure_val;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.signature.Manifest;
 import org.apache.xml.security.signature.MissingResourceFailureException;
@@ -34,8 +35,7 @@ import org.w3c.dom.Element;
 public class ForbiddenReferenceTest extends InteropTestBase {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ForbiddenReferenceTest.class.getName());
+    static Logger log = Logger.getLogger(ForbiddenReferenceTest.class.getName());
 
     static {
         org.apache.xml.security.Init.init();

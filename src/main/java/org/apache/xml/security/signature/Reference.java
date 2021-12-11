@@ -25,6 +25,8 @@ import java.security.PrivilegedAction;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.algorithms.Algorithm;
 import org.apache.xml.security.algorithms.MessageDigestAlgorithm;
@@ -129,8 +131,7 @@ public class Reference extends SignatureElementProxy {
         })).booleanValue();
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static final org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(Reference.class);
+    private static final Logger log = Logger.getLogger(Reference.class.getName());
 
     private Manifest manifest;
     private XMLSignatureInput transformsOutput;
@@ -644,7 +645,7 @@ public class Reference extends SignatureElementProxy {
                 };
             } catch (Exception e) {
                 // log a warning
-                log.warn("cannot cache dereferenced data: " + e);
+                log.log(Level.WARNING, "cannot cache dereferenced data: " + e);
             }
         } else if (input.isElement()) {
             referenceData = new ReferenceSubTreeData
@@ -656,7 +657,7 @@ public class Reference extends SignatureElementProxy {
                         input.getMIMEType());
             } catch (IOException ioe) {
                 // log a warning
-                log.warn("cannot cache dereferenced data: " + ioe);
+                log.log(Level.WARNING, "cannot cache dereferenced data: " + ioe);
             }
         }
     }
@@ -786,12 +787,12 @@ public class Reference extends SignatureElementProxy {
         boolean equal = MessageDigestAlgorithm.isEqual(elemDig, calcDig);
 
         if (!equal) {
-            log.warn("Verification failed for URI \"" + this.getURI() + "\"");
-            log.warn("Expected Digest: " + Base64.encode(elemDig));
-            log.warn("Actual Digest: " + Base64.encode(calcDig));
+            log.log(Level.WARNING, "Verification failed for URI \"" + this.getURI() + "\"");
+            log.log(Level.WARNING, "Expected Digest: " + Base64.encode(elemDig));
+            log.log(Level.WARNING, "Actual Digest: " + Base64.encode(calcDig));
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("Verification successful for URI \"" + this.getURI() + "\"");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Verification successful for URI \"" + this.getURI() + "\"");
             }
         }
 

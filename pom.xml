@@ -182,7 +182,6 @@
                               !org.apache.xml.security.*,
                               !javax.xml.crypto.*,
                               !org.apache.jcp.xml.dsig.internal.*,
-                              org.apache.commons.logging;resolution:=optional;version="[1.1,2)",
                               org.apache.xml.dtm*;resolution:=optional;version="[2.7,3)",
                               org.apache.xml.utils*;resolution:=optional;version="[2.7,3)",
                               org.apache.xpath*;resolution:=optional;version="[2.7,3)",
@@ -331,7 +330,6 @@
 
     <properties>
         <xml.apis.version>1.3.04</xml.apis.version>
-        <commons.logging.version>1.1.1</commons.logging.version>
         <xalan.version>2.7.2</xalan.version>
         <xerces.version>2.9.1</xerces.version>
         <junit.version>4.8.2</junit.version>
@@ -340,12 +338,6 @@
     </properties>
     
     <dependencies>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>${commons.logging.version}</version>
-            <scope>compile</scope>
-        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

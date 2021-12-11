@@ -27,10 +27,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * This resolver is used for resolving same-document URIs like URI="" of URI="#id".
  *
- * @author $Author$
+ * @author $Author: coheigea $
  * @see <A HREF="http://www.w3.org/TR/xmldsig-core/#sec-ReferenceProcessingModel">The Reference processing model in the XML Signature spec</A>
  * @see <A HREF="http://www.w3.org/TR/xmldsig-core/#sec-Same-Document">Same-Document URI-References in the XML Signature spec</A>
  * @see <A HREF="http://www.ietf.org/rfc/rfc2396.txt">Section 4.2 of RFC 2396</A>
@@ -38,8 +41,8 @@ import org.w3c.dom.Node;
 public class ResolverFragment extends ResourceResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ResolverFragment.class);
+    private static Logger log =
+            Logger.getLogger(ResolverFragment.class.getName());
     
     @Override
     public boolean engineIsThreadSafe() {
@@ -64,8 +67,8 @@ public class ResolverFragment extends ResourceResolverSpi {
              * Identifies the node-set (minus any comment nodes) of the XML
              * resource containing the signature
              */
-            if (log.isDebugEnabled()) {
-                log.debug("ResolverFragment with empty URI (means complete document)");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "ResolverFragment with empty URI (means complete document)");
             }
             selectedElem = doc;
         } else {
@@ -95,9 +98,9 @@ public class ResolverFragment extends ResourceResolverSpi {
                     );
                 }
             }
-            if (log.isDebugEnabled()) {
-                log.debug(
-                    "Try to catch an Element with ID " + id + " and Element was " + selectedElem
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE,
+                        "Try to catch an Element with ID " + id + " and Element was " + selectedElem
                 );
             }
         }
@@ -123,8 +126,8 @@ public class ResolverFragment extends ResourceResolverSpi {
      */
     public boolean engineCanResolveURI(ResourceResolverContext context) {
         if (context.uriToResolve == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("Quick fail for null uri");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Quick fail for null uri");
             }
             return false;
         }
@@ -132,13 +135,13 @@ public class ResolverFragment extends ResourceResolverSpi {
         if (context.uriToResolve.equals("") || 
             ((context.uriToResolve.charAt(0) == '#') && !context.uriToResolve.startsWith("#xpointer("))
         ) {
-            if (log.isDebugEnabled()) {
-                log.debug("State I can resolve reference: \"" + context.uriToResolve + "\"");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "State I can resolve reference: \"" + context.uriToResolve + "\"");
             }
             return true;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Do not seem to be able to resolve reference: \"" + context.uriToResolve + "\"");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Do not seem to be able to resolve reference: \"" + context.uriToResolve + "\"");
         }
         return false;
     }

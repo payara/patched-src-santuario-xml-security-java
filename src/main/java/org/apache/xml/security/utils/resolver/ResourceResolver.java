@@ -21,6 +21,8 @@ package org.apache.xml.security.utils.resolver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.signature.XMLSignatureInput;
 import org.apache.xml.security.utils.ClassLoaderUtils;
@@ -40,8 +42,7 @@ import org.w3c.dom.Attr;
 public class ResourceResolver {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ResourceResolver.class);
+    private static Logger log = Logger.getLogger(ResourceResolver.class.getName());
     
     /** these are the system-wide resolvers */
     private static List<ResourceResolver> resolverList = new ArrayList<ResourceResolver>();
@@ -105,9 +106,9 @@ public class ResourceResolver {
                     }
                 }
     
-                if (log.isDebugEnabled()) {
-                    log.debug(
-                        "check resolvability by class " + resolverTmp.getClass().getName()
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE,
+                            "check resolvability by class " + resolverTmp.getClass().getName()
                     );
                 }
     
@@ -162,10 +163,10 @@ public class ResourceResolver {
     public static ResourceResolver getInstance(
         Attr uri, String baseURI, List<ResourceResolver> individualResolvers, boolean secureValidation
     ) throws ResourceResolverException {
-        if (log.isDebugEnabled()) {
-            log.debug(
-                "I was asked to create a ResourceResolver and got " 
-                + (individualResolvers == null ? 0 : individualResolvers.size())
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE,
+                    "I was asked to create a ResourceResolver and got "
+                            + (individualResolvers == null ? 0 : individualResolvers.size())
             );
         }
 
@@ -177,9 +178,9 @@ public class ResourceResolver {
                 ResourceResolver resolver = individualResolvers.get(i);
 
                 if (resolver != null) {
-                    if (log.isDebugEnabled()) {
+                    if (log.isLoggable(Level.FINE)) {
                         String currentClass = resolver.resolverSpi.getClass().getName();
-                        log.debug("check resolvability by class " + currentClass);
+                        log.log(Level.FINE, "check resolvability by class " + currentClass);
                     }
 
                     if (resolver.canResolve(context)) {
@@ -209,7 +210,7 @@ public class ResourceResolver {
                 ClassLoaderUtils.loadClass(className, ResourceResolver.class);
             register(resourceResolverClass, false);
         } catch (ClassNotFoundException e) {
-            log.warn("Error loading resolver " + className + " disabling it");
+            log.log(Level.WARNING, "Error loading resolver " + className + " disabling it");
         }
     }
 
@@ -230,7 +231,7 @@ public class ResourceResolver {
                 ClassLoaderUtils.loadClass(className, ResourceResolver.class);
             register(resourceResolverClass, true);
         } catch (ClassNotFoundException e) {
-            log.warn("Error loading resolver " + className + " disabling it");
+            log.log(Level.WARNING, "Error loading resolver " + className + " disabling it");
         }
     }
 
@@ -248,9 +249,9 @@ public class ResourceResolver {
             ResourceResolverSpi resourceResolverSpi = className.newInstance();
             register(resourceResolverSpi, start);
         } catch (IllegalAccessException e) {
-            log.warn("Error loading resolver " + className + " disabling it");
+            log.log(Level.WARNING, "Error loading resolver " + className + " disabling it");
         } catch (InstantiationException e) {
-            log.warn("Error loading resolver " + className + " disabling it");
+            log.log(Level.WARNING, "Error loading resolver " + className + " disabling it");
         }
     }
     
@@ -271,8 +272,8 @@ public class ResourceResolver {
                 resolverList.add(new ResourceResolver(resourceResolverSpi));
             }
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Registered resolver: " + resourceResolverSpi.toString());
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Registered resolver: " + resourceResolverSpi.toString());
         }
     }
     

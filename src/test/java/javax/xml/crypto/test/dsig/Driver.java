@@ -21,14 +21,15 @@ package javax.xml.crypto.test.dsig;
 import javax.xml.crypto.dsig.CanonicalizationMethod;
 import javax.xml.crypto.dsig.XMLSignatureFactory;
 import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Used by ClassLoaderTest
  */
 public class Driver {
-    
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(Driver.class);
+
+    private static Logger log = Logger.getLogger(Driver.class.getName());
 
     public void dsig() throws Exception {
 
@@ -41,9 +42,9 @@ public class Driver {
         }
         long end = System.currentTimeMillis();
         long elapsed = end - start;
-        if (log.isDebugEnabled()) {
-            log.debug("Elapsed: " + elapsed);
-            log.debug("dsig succeeded");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Elapsed: " + elapsed);
+            log.log(Level.FINE, "dsig succeeded");
         }
     }
 }

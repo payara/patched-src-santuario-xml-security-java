@@ -31,6 +31,8 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.keys.storage.StorageResolverException;
 import org.apache.xml.security.keys.storage.StorageResolverSpi;
@@ -44,10 +46,7 @@ import org.apache.xml.security.utils.Base64;
 public class CertsInFilesystemDirectoryResolver extends StorageResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(
-            CertsInFilesystemDirectoryResolver.class
-        );
+    private static Logger log = Logger.getLogger(CertsInFilesystemDirectoryResolver.class.getName());
 
     /** Field merlinsCertificatesDir */
     private String merlinsCertificatesDir = null;
@@ -116,20 +115,20 @@ public class CertsInFilesystemDirectoryResolver extends StorageResolverSpi {
                 dn = cert.getSubjectX500Principal().getName();
                 added = true;
             } catch (FileNotFoundException ex) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not add certificate from file " + filename, ex);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Could not add certificate from file " + filename, ex);
                 }
             } catch (CertificateNotYetValidException ex) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not add certificate from file " + filename, ex);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Could not add certificate from file " + filename, ex);
                 }
             } catch (CertificateExpiredException ex) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not add certificate from file " + filename, ex);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Could not add certificate from file " + filename, ex);
                 }
             } catch (CertificateException ex) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not add certificate from file " + filename, ex);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Could not add certificate from file " + filename, ex);
                 }
             } finally {
                 try {
@@ -137,14 +136,14 @@ public class CertsInFilesystemDirectoryResolver extends StorageResolverSpi {
                         fis.close();
                     }
                 } catch (IOException ex) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Could not add certificate from file " + filename, ex);
+                    if (log.isLoggable(Level.FINE)) {
+                        log.log(Level.FINE, "Could not add certificate from file " + filename, ex);
                     }
                 } 
             }
 
-            if (added && log.isDebugEnabled()) {
-                log.debug("Added certificate: " + dn);
+            if (added && log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Added certificate: " + dn);
             }
         }
     }
