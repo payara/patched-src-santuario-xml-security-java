@@ -22,6 +22,8 @@ import java.io.File;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -43,8 +45,7 @@ import org.w3c.dom.Node;
 public class InteropTestBase extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(InteropTestBase.class.getName());
+    static Logger log = Logger.getLogger(InteropTestBase.class.getName());
 
     /**
      * Method verifyHMAC
@@ -138,10 +139,10 @@ public class InteropTestBase extends org.junit.Assert {
                     signature.getSignedInfo().getVerificationResult(i);             
 
                 if (refVerify) {
-                    log.debug("Reference " + i + " was OK");
+                    log.log(Level.FINE, "Reference " + i + " was OK");
                 } else {
                     // JavaUtils.writeBytesToFilename(filename + i + ".apache.txt", signature.getSignedInfo().item(i).getContentsAfterTransformation().getBytes());                
-                    log.debug("Reference " + i + " was not OK");
+                    log.log(Level.FINE, "Reference " + i + " was not OK");
                 }
             }
             checkReferences(signature);

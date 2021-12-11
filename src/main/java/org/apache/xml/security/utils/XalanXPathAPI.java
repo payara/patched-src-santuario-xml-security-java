@@ -21,6 +21,8 @@ package org.apache.xml.security.utils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.transform.ErrorListener;
 import javax.xml.transform.SourceLocator;
@@ -44,8 +46,7 @@ import org.w3c.dom.NodeList;
  */
 public class XalanXPathAPI implements XPathAPI {
 
-    private static org.apache.commons.logging.Log log =
-        org.apache.commons.logging.LogFactory.getLog(XalanXPathAPI.class);
+    private static Logger log = Logger.getLogger(XalanXPathAPI.class.getName());
 
     private String xpathStr = null;
 
@@ -151,8 +152,8 @@ public class XalanXPathAPI implements XPathAPI {
             Constructor<?> constructor = XPath.class.getConstructor(classes);
             xpath = (XPath) constructor.newInstance(objects);
         } catch (Exception ex) {
-            if (log.isDebugEnabled()) {
-                log.debug(ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, ex.toString());
             }
         }
         if (xpath == null) {
@@ -163,8 +164,8 @@ public class XalanXPathAPI implements XPathAPI {
 
     private synchronized static void fixupFunctionTable() {
         installed = false;
-        if (log.isDebugEnabled()) {
-            log.debug("Registering Here function");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Registering Here function");
         }
         /**
          * Try to register our here() implementation as internal function.
@@ -178,7 +179,7 @@ public class XalanXPathAPI implements XPathAPI {
                 installed = true;
             }
         } catch (Exception ex) {
-            log.debug("Error installing function using the static installFunction method", ex);
+            log.log(Level.FINE, "Error installing function using the static installFunction method", ex);
         }
         if (!installed) {
             try {
@@ -189,16 +190,16 @@ public class XalanXPathAPI implements XPathAPI {
                 installFunction.invoke(funcTable, params);
                 installed = true;
             } catch (Exception ex) {
-                log.debug("Error installing function using the static installFunction method", ex);
+                log.log(Level.FINE, "Error installing function using the static installFunction method", ex);
             }
         }
-        if (log.isDebugEnabled()) {
+        if (log.isLoggable(Level.FINE)) {
             if (installed) {
-                log.debug("Registered class " + FuncHere.class.getName()
-                          + " for XPath function 'here()' function in internal table");
+                log.log(Level.FINE, "Registered class " + FuncHere.class.getName()
+                        + " for XPath function 'here()' function in internal table");
             } else {
-                log.debug("Unable to register class " + FuncHere.class.getName()
-                          + " for XPath function 'here()' function in internal table");
+                log.log(Level.FINE, "Unable to register class " + FuncHere.class.getName()
+                        + " for XPath function 'here()' function in internal table");
             }
         }
     }

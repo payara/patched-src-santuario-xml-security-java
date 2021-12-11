@@ -20,6 +20,8 @@ package org.apache.xml.security.keys.keyresolver.implementations;
 
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 import org.apache.xml.security.exceptions.XMLSecurityException;
@@ -33,16 +35,16 @@ import org.w3c.dom.Element;
 public class RSAKeyValueResolver extends KeyResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(RSAKeyValueResolver.class);
+    private static Logger log =
+            Logger.getLogger(RSAKeyValueResolver.class.getName());
 
 
     /** @inheritDoc */
     public PublicKey engineLookupAndResolvePublicKey(
         Element element, String BaseURI, StorageResolver storage
     ) {
-        if (log.isDebugEnabled()) {
-            log.debug("Can I resolve " + element.getTagName());
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Can I resolve " + element.getTagName());
         }
         if (element == null) {
             return null;
@@ -68,8 +70,8 @@ public class RSAKeyValueResolver extends KeyResolverSpi {
 
             return rsaKeyValue.getPublicKey();
         } catch (XMLSecurityException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug("XMLSecurityException", ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "XMLSecurityException", ex);
             }
         }
 

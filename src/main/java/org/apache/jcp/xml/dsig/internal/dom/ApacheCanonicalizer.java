@@ -30,6 +30,8 @@ import java.io.OutputStream;
 import java.security.spec.AlgorithmParameterSpec;
 import java.security.InvalidAlgorithmParameterException;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.crypto.*;
 import javax.xml.crypto.dom.DOMCryptoContext;
@@ -51,8 +53,7 @@ public abstract class ApacheCanonicalizer extends TransformService {
         org.apache.xml.security.Init.init();
     }
 
-    private static org.apache.commons.logging.Log log =
-        org.apache.commons.logging.LogFactory.getLog(ApacheCanonicalizer.class);
+    private static Logger log = Logger.getLogger(ApacheCanonicalizer.class.getName());
     protected Canonicalizer apacheCanonicalizer;
     private Transform apacheTransform;
     protected String inclusiveNamespaces;
@@ -115,8 +116,8 @@ public abstract class ApacheCanonicalizer extends TransformService {
                 apacheCanonicalizer = Canonicalizer.getInstance(getAlgorithm());
                 boolean secVal = Utils.secureValidation(xc);
                 apacheCanonicalizer.setSecureValidation(secVal);
-                if (log.isDebugEnabled()) {
-                    log.debug("Created canonicalizer for algorithm: " + getAlgorithm());
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Created canonicalizer for algorithm: " + getAlgorithm());
                 }
             } catch (InvalidCanonicalizerException ice) {
                 throw new TransformException
@@ -170,8 +171,8 @@ public abstract class ApacheCanonicalizer extends TransformService {
                 @SuppressWarnings("unchecked")
                 Set<Node> ns = Utils.toNodeSet(nsd.iterator());
                 nodeSet = ns;
-                if (log.isDebugEnabled()) {
-                    log.debug("Canonicalizing " + nodeSet.size() + " nodes");
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Canonicalizing " + nodeSet.size() + " nodes");
                 }
             } else {
                 return new OctetStreamData(new ByteArrayInputStream(
@@ -213,8 +214,8 @@ public abstract class ApacheCanonicalizer extends TransformService {
                 apacheTransform.setElement(transformElem, xc.getBaseURI());
                 boolean secVal = Utils.secureValidation(xc);
                 apacheTransform.setSecureValidation(secVal);
-                if (log.isDebugEnabled()) {
-                    log.debug("Created transform for algorithm: " + getAlgorithm());            
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Created transform for algorithm: " + getAlgorithm());
                 }
             } catch (Exception ex) {
                 throw new TransformException
@@ -224,13 +225,13 @@ public abstract class ApacheCanonicalizer extends TransformService {
 
         XMLSignatureInput in;
         if (data instanceof ApacheData) {
-            if (log.isDebugEnabled()) {
-                log.debug("ApacheData = true");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "ApacheData = true");
             }
             in = ((ApacheData)data).getXMLSignatureInput();
         } else if (data instanceof NodeSetData) {
-            if (log.isDebugEnabled()) {
-                log.debug("isNodeSet() = true");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "isNodeSet() = true");
             }
             if (data instanceof DOMSubTreeData) {
                 DOMSubTreeData subTree = (DOMSubTreeData)data;
@@ -243,8 +244,8 @@ public abstract class ApacheCanonicalizer extends TransformService {
                 in = new XMLSignatureInput(nodeSet);
             }
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("isNodeSet() = false");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "isNodeSet() = false");
             }
             try {
                 in = new XMLSignatureInput

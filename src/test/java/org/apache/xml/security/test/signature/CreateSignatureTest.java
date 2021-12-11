@@ -27,6 +27,7 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
+import java.util.logging.Logger;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -56,8 +57,7 @@ import org.w3c.dom.Element;
 public class CreateSignatureTest extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log =
-        org.apache.commons.logging.LogFactory.getLog(CreateSignatureTest.class.getName());
+    static Logger log = Logger.getLogger(CreateSignatureTest.class.getName());
 
     private static final String BASEDIR = System.getProperty("basedir");
     private static final String SEP = System.getProperty("file.separator");

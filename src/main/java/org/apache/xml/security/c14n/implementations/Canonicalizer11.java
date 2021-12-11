@@ -30,6 +30,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -56,8 +58,8 @@ public abstract class Canonicalizer11 extends CanonicalizerBase {
     
     private static final String XMLNS_URI = Constants.NamespaceSpecNS;
     private static final String XML_LANG_URI = Constants.XML_LANG_SPACE_SpecNS;
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(Canonicalizer11.class);
+    private static Logger log =
+            Logger.getLogger(Canonicalizer11.class.getName());
     private final SortedSet<Attr> result = new TreeSet<Attr>(COMPARE);
     
     private boolean firstCall = true;
@@ -165,8 +167,8 @@ public abstract class Canonicalizer11 extends CanonicalizerBase {
                         try {
                             base = joinURI(n.getValue(), base);
                         } catch (URISyntaxException ue) {
-                            if (log.isDebugEnabled()) {
-                                log.debug(ue.getMessage(), ue);
+                            if (log.isLoggable(Level.FINE)) {
+                                log.log(Level.FINE, ue.getMessage(), ue);
                             }
                         }
                     }
@@ -516,8 +518,8 @@ public abstract class Canonicalizer11 extends CanonicalizerBase {
     }
 
     private static String removeDotSegments(String path) {
-        if (log.isDebugEnabled()) {
-            log.debug("STEP   OUTPUT BUFFER\t\tINPUT BUFFER");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "STEP   OUTPUT BUFFER\t\tINPUT BUFFER");
         }
 
         // 1. The input buffer is initialized with the now-appended path
@@ -671,12 +673,12 @@ public abstract class Canonicalizer11 extends CanonicalizerBase {
     }
 
     private static void printStep(String step, String output, String input) {
-        if (log.isDebugEnabled()) {
-            log.debug(" " + step + ":   " + output);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, " " + step + ":   " + output);
             if (output.length() == 0) {
-                log.debug("\t\t\t\t" + input);
+                log.log(Level.FINE, "\t\t\t\t" + input);
             } else {
-                log.debug("\t\t\t" + input);
+                log.log(Level.FINE, "\t\t\t" + input);
             }
         }
     }

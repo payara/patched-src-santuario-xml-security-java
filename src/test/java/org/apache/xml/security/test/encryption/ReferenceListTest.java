@@ -19,6 +19,7 @@
 package org.apache.xml.security.test.encryption;
 
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 
@@ -33,8 +34,7 @@ import org.w3c.dom.Element;
 public class ReferenceListTest extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ReferenceListTest.class.getName());
+    static Logger log = Logger.getLogger(ReferenceListTest.class.getName());
 
     private DocumentBuilder db;
 

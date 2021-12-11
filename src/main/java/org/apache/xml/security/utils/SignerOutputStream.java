@@ -19,6 +19,8 @@
 package org.apache.xml.security.utils;
 
 import java.io.ByteArrayOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.algorithms.SignatureAlgorithm;
 import org.apache.xml.security.signature.XMLSignatureException;
@@ -28,8 +30,8 @@ import org.apache.xml.security.signature.XMLSignatureException;
  *
  */
 public class SignerOutputStream extends ByteArrayOutputStream {
-    private static org.apache.commons.logging.Log log =
-        org.apache.commons.logging.LogFactory.getLog(SignerOutputStream.class);
+
+    private static Logger log = Logger.getLogger(SignerOutputStream.class.getName());
     
     final SignatureAlgorithm sa;
 
@@ -60,13 +62,13 @@ public class SignerOutputStream extends ByteArrayOutputStream {
 
     /** @inheritDoc */
     public void write(byte[] arg0, int arg1, int arg2) {
-        if (log.isDebugEnabled()) {
-            log.debug("Canonicalized SignedInfo:");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Canonicalized SignedInfo:");
             StringBuilder sb = new StringBuilder(arg2);
             for (int i = arg1; i < (arg1 + arg2); i++) {
                 sb.append((char)arg0[i]);
             }
-            log.debug(sb.toString());
+            log.log(Level.FINE, sb.toString());
         }
         try {
             sa.update(arg0, arg1, arg2);

@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -44,8 +46,8 @@ import org.w3c.dom.NodeList;
  * @author wglas
  */
 public class XPointerResourceResolver extends ResourceResolverSpi {
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(XPointerResourceResolver.class);
+    private static Logger log =
+            Logger.getLogger(XPointerResourceResolver.class.getName());
 
     private static final String XP_OPEN = "xpointer(";
     private static final String XNS_OPEN = "xmlns(";
@@ -71,7 +73,7 @@ public class XPointerResourceResolver extends ResourceResolverSpi {
         try {
             xpURI = URLDecoder.decode(v, "utf-8");
         } catch (UnsupportedEncodingException e) {
-            log.warn("utf-8 not a valid encoding",e);
+            log.log(Level.WARNING, "utf-8 not a valid encoding", e);
             return false;
         }
 
@@ -93,8 +95,8 @@ public class XPointerResourceResolver extends ResourceResolverSpi {
             return false;
         }
 
-        log.debug("xpURI = " + xpURI);
-        log.debug("BaseURI = " + BaseURI);
+        log.log(Level.FINE, "xpURI = " + xpURI);
+        log.log(Level.FINE, "BaseURI = " + BaseURI);
 
         return true;
     }
@@ -111,7 +113,7 @@ public class XPointerResourceResolver extends ResourceResolverSpi {
         try {
             xpURI = URLDecoder.decode(v, "utf-8");
         } catch (UnsupportedEncodingException e) {
-            log.warn("utf-8 not a valid encoding ", e);
+            log.log(Level.WARNING, "utf-8 not a valid encoding ", e);
             return null;
         }
 

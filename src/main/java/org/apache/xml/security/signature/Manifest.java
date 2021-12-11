@@ -25,6 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -57,8 +59,7 @@ public class Manifest extends SignatureElementProxy {
     public static final int MAXIMUM_REFERENCE_COUNT = 30;
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(Manifest.class);
+    private static Logger log = Logger.getLogger(Manifest.class.getName());
 
     /** Field references */
     private List<Reference> references;
@@ -309,10 +310,10 @@ public class Manifest extends SignatureElementProxy {
                     this.constructionElement.getFirstChild(), Constants._TAG_REFERENCE
                 );
         }
-        if (log.isDebugEnabled()) {
-            log.debug("verify " + referencesEl.length + " References");
-            log.debug("I am " + (followManifests
-                ? "" : "not") + " requested to follow nested Manifests");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "verify " + referencesEl.length + " References");
+            log.log(Level.FINE, "I am " + (followManifests
+                    ? "" : "not") + " requested to follow nested Manifests");
         }
         if (referencesEl.length == 0) {
             throw new XMLSecurityException("empty");
@@ -340,14 +341,14 @@ public class Manifest extends SignatureElementProxy {
                 if (!currentRefVerified) {
                     verify = false;
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("The Reference has Type " + currentRef.getType());
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "The Reference has Type " + currentRef.getType());
                 }
 
                 // was verification successful till now and do we want to verify the Manifest?
                 if (verify && followManifests && currentRef.typeIsReferenceToManifest()) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("We have to follow a nested Manifest");
+                    if (log.isLoggable(Level.FINE)) {
+                        log.log(Level.FINE, "We have to follow a nested Manifest");
                     }
 
                     try {
@@ -371,8 +372,8 @@ public class Manifest extends SignatureElementProxy {
                                         );
                                     break findManifest;
                                 } catch (XMLSecurityException ex) {
-                                    if (log.isDebugEnabled()) {
-                                        log.debug(ex);
+                                    if (log.isLoggable(Level.FINE)) {
+                                        log.log(Level.FINE, ex.toString());
                                     }
                                     // Hm, seems not to be a ds:Manifest
                                 }
@@ -394,10 +395,10 @@ public class Manifest extends SignatureElementProxy {
                         if (!referencedManifestValid) {
                             verify = false;
 
-                            log.warn("The nested Manifest was invalid (bad)");
+                            log.log(Level.WARNING, "The nested Manifest was invalid (bad)");
                         } else {
-                            if (log.isDebugEnabled()) {
-                                log.debug("The nested Manifest was valid (good)");
+                            if (log.isLoggable(Level.FINE)) {
+                                log.log(Level.FINE, "The nested Manifest was valid (good)");
                             }
                         }
                     } catch (IOException ex) {

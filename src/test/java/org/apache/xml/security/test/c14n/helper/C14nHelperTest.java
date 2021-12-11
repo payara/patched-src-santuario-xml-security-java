@@ -20,6 +20,8 @@ package org.apache.xml.security.test.c14n.helper;
 
 import org.apache.xml.security.c14n.helper.C14nHelper;
 
+import java.util.logging.Logger;
+
 
 /**
  * @author Christian Geuer-Pollmann
@@ -27,8 +29,7 @@ import org.apache.xml.security.c14n.helper.C14nHelper;
 public class C14nHelperTest extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(C14nHelperTest.class.getName());
+    static Logger log = Logger.getLogger(C14nHelperTest.class.getName());
 
     static {
         org.apache.xml.security.Init.init();

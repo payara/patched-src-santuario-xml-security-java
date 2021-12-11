@@ -19,6 +19,8 @@
 package org.apache.xml.security.test.transforms.implementations;
 
 import java.io.ByteArrayInputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -42,8 +44,7 @@ import org.w3c.dom.Node;
 public class TransformBase64DecodeTest extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(TransformBase64DecodeTest.class.getName());
+    static Logger log = Logger.getLogger(TransformBase64DecodeTest.class.getName());
 
     static {
         org.apache.xml.security.Init.init();
@@ -143,7 +144,7 @@ public class TransformBase64DecodeTest extends org.junit.Assert {
         if (doc == null) {
             throw new RuntimeException("Could not create a Document");
         } else {
-            log.debug("I could create the Document");
+            log.log(Level.FINE, "I could create the Document");
         }
         return doc;
     }

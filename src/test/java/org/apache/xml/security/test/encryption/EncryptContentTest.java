@@ -20,6 +20,8 @@ package org.apache.xml.security.test.encryption;
 
 import java.io.ByteArrayInputStream;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
@@ -43,8 +45,7 @@ import org.w3c.dom.NodeList;
 public class EncryptContentTest extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(EncryptContentTest.class.getName());
+    static Logger log = Logger.getLogger(EncryptContentTest.class.getName());
 
     private static final String DATA =
         "<users>\n" +
@@ -109,7 +110,7 @@ public class EncryptContentTest extends org.junit.Assert {
     @org.junit.Test
     public void testContentRemoved() throws Exception {
         if (!haveISOPadding) {
-            log.warn("Test testContentRemoved skipped as necessary algorithms not available");
+            log.log(Level.WARNING, "Test testContentRemoved skipped as necessary algorithms not available");
             return;
         }
 
@@ -158,7 +159,7 @@ public class EncryptContentTest extends org.junit.Assert {
     @org.junit.Test
     public void testMultipleKeyInfoElements() throws Exception {
         if (!haveISOPadding) {
-            log.warn("Test testMultipleKeyInfoElements skipped as necessary algorithms not available");
+            log.log(Level.WARNING, "Test testMultipleKeyInfoElements skipped as necessary algorithms not available");
             return;
         }
 

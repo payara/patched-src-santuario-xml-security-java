@@ -27,6 +27,8 @@ import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -64,8 +66,7 @@ import org.w3c.dom.NodeList;
 public class XMLCipherTest extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(XMLCipherTest.class.getName());
+    private static Logger log = Logger.getLogger(XMLCipherTest.class.getName());
     
     static {
         org.apache.xml.security.Init.init();
@@ -171,9 +172,9 @@ public class XMLCipherTest extends org.junit.Assert {
             target = toString(dd);
             assertEquals(source, target);
         } else {
-            log.warn(
-                "Test testAES128ElementAES192KWCipherUsingKEK skipped as "
-                + "necessary algorithms not available"
+            log.log(Level.WARNING,
+                    "Test testAES128ElementAES192KWCipherUsingKEK skipped as "
+                            + "necessary algorithms not available"
             );
         }
     }
@@ -227,8 +228,8 @@ public class XMLCipherTest extends org.junit.Assert {
             builderKeyInfo.add(encryptedKey);
 
             ed = cipher.doFinal(d, e);
-            log.debug("Encrypted document");
-            log.debug(toString(ed));
+            log.log(Level.FINE, "Encrypted document");
+            log.log(Level.FINE, toString(ed));
 
 
             //decrypt
@@ -242,9 +243,9 @@ public class XMLCipherTest extends org.junit.Assert {
             target = toString(dd);
             assertEquals(source, target);
         } else {
-            log.warn(
-                "Test testAES128ElementRSAKWCipherUsingKEK skipped as "
-                + "necessary algorithms not available"
+            log.log(Level.WARNING,
+                    "Test testAES128ElementRSAKWCipherUsingKEK skipped as "
+                            + "necessary algorithms not available"
             );
         }
     }
@@ -329,9 +330,9 @@ public class XMLCipherTest extends org.junit.Assert {
             target = toString(dd);
             assertEquals(source, target);
         } else {
-            log.warn(
-                "Test testAES192ElementAES256KWCipher skipped as "
-                + "necessary algorithms not available"
+            log.log(Level.WARNING,
+                    "Test testAES192ElementAES256KWCipher skipped as "
+                            + "necessary algorithms not available"
             );
         }
     }
@@ -373,8 +374,8 @@ public class XMLCipherTest extends org.junit.Assert {
             target = toString(dd);
             assertEquals(source, target);
         } else {
-            log.warn(
-                "Test testTripleDesElementCipher skipped as necessary algorithms not available"
+            log.log(Level.WARNING,
+                    "Test testTripleDesElementCipher skipped as necessary algorithms not available"
             );
         }
     }
@@ -417,8 +418,8 @@ public class XMLCipherTest extends org.junit.Assert {
             target = toString(dd);
             assertEquals(source, target);
         } else {
-            log.warn(
-                "Test testAes128ElementCipher skipped as necessary algorithms not available"
+            log.log(Level.WARNING,
+                    "Test testAes128ElementCipher skipped as necessary algorithms not available"
             );
         }
     }
@@ -463,7 +464,7 @@ public class XMLCipherTest extends org.junit.Assert {
             target = toString(dd);
             assertEquals(source, target);
         } else {
-            log.warn("Test testAes192ElementCipher skipped as necessary algorithms not available");
+            log.log(Level.WARNING, "Test testAes192ElementCipher skipped as necessary algorithms not available");
         }
     }
 
@@ -509,7 +510,7 @@ public class XMLCipherTest extends org.junit.Assert {
             target = toString(dd);
             assertEquals(source, target);
         } else {
-            log.warn("Test testAes265ElementCipher skipped as necessary algorithms not available");
+            log.log(Level.WARNING, "Test testAes265ElementCipher skipped as necessary algorithms not available");
         }
     }
 
@@ -551,9 +552,9 @@ public class XMLCipherTest extends org.junit.Assert {
             target = toString(dd);
             assertEquals(source, target);
         } else {
-            log.warn(
-                "Test testTripleDesDocumentCipher skipped as "
-                + "necessary algorithms not available"
+            log.log(Level.WARNING,
+                    "Test testTripleDesDocumentCipher skipped as "
+                            + "necessary algorithms not available"
             );
         }
     }
@@ -609,9 +610,9 @@ public class XMLCipherTest extends org.junit.Assert {
             target = toString(dd);
             assertEquals(source, target);
         } else {
-            log.warn(
-                "Test testTripleDesDocumentCipher skipped as "
-                + "necessary algorithms not available"
+            log.log(Level.WARNING,
+                    "Test testTripleDesDocumentCipher skipped as "
+                            + "necessary algorithms not available"
             );
         }
     }
@@ -682,9 +683,9 @@ public class XMLCipherTest extends org.junit.Assert {
             assertEquals("A test encrypted secret",
                         new String(decryptBytes, "ASCII")); 
         } else {
-            log.warn(
-                "Test testSameDocumentCipherReference skipped as "
-                + "necessary algorithms not available"
+            log.log(Level.WARNING,
+                    "Test testSameDocumentCipherReference skipped as "
+                            + "necessary algorithms not available"
             );
         }
     }
@@ -783,9 +784,9 @@ public class XMLCipherTest extends org.junit.Assert {
             n = n.getNextSibling();
             assertNull(n);
         } else {
-            log.warn(
-                "Test testPhysicalRepresentation skipped as "
-                + "necessary algorithms not available"
+            log.log(Level.WARNING,
+                    "Test testPhysicalRepresentation skipped as "
+                            + "necessary algorithms not available"
             );
         }
     }
@@ -793,7 +794,7 @@ public class XMLCipherTest extends org.junit.Assert {
     @org.junit.Test
     public void testSerializedData() throws Exception {
         if (!haveISOPadding) {
-            log.warn("Test testSerializedData skipped as necessary algorithms not available");
+            log.log(Level.WARNING, "Test testSerializedData skipped as necessary algorithms not available");
             return;
         }
 

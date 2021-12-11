@@ -22,6 +22,8 @@ import java.security.PublicKey;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.keys.content.X509Data;
@@ -36,8 +38,8 @@ import org.w3c.dom.Element;
 public class X509IssuerSerialResolver extends KeyResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(X509IssuerSerialResolver.class);
+    private static Logger log =
+            Logger.getLogger(X509IssuerSerialResolver.class.getName());
 
 
     /** @inheritDoc */
@@ -59,21 +61,21 @@ public class X509IssuerSerialResolver extends KeyResolverSpi {
     public X509Certificate engineLookupResolveX509Certificate(
         Element element, String baseURI, StorageResolver storage
     ) throws KeyResolverException {
-        if (log.isDebugEnabled()) {
-            log.debug("Can I resolve " + element.getTagName() + "?");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Can I resolve " + element.getTagName() + "?");
         }
 
         X509Data x509data = null;
         try {
             x509data = new X509Data(element, baseURI);
         } catch (XMLSignatureException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug("I can't");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I can't");
             }
             return null;
         } catch (XMLSecurityException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug("I can't");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I can't");
             }
             return null;
         }
@@ -87,8 +89,8 @@ public class X509IssuerSerialResolver extends KeyResolverSpi {
                 KeyResolverException ex =
                     new KeyResolverException("KeyResolver.needStorageResolver", exArgs);
 
-                if (log.isDebugEnabled()) {
-                    log.debug("", ex);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "", ex);
                 }
                 throw ex;
             }
@@ -100,37 +102,37 @@ public class X509IssuerSerialResolver extends KeyResolverSpi {
                 X509Certificate cert = (X509Certificate)storageIterator.next();
                 XMLX509IssuerSerial certSerial = new XMLX509IssuerSerial(element.getOwnerDocument(), cert);
 
-                if (log.isDebugEnabled()) {
-                    log.debug("Found Certificate Issuer: " + certSerial.getIssuerName());
-                    log.debug("Found Certificate Serial: " + certSerial.getSerialNumber().toString());
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Found Certificate Issuer: " + certSerial.getIssuerName());
+                    log.log(Level.FINE, "Found Certificate Serial: " + certSerial.getSerialNumber().toString());
                 }
 
                 for (int i = 0; i < noOfISS; i++) {
                     XMLX509IssuerSerial xmliss = x509data.itemIssuerSerial(i);
 
-                    if (log.isDebugEnabled()) {
-                        log.debug("Found Element Issuer:     "
-                                  + xmliss.getIssuerName());
-                        log.debug("Found Element Serial:     "
-                                  + xmliss.getSerialNumber().toString());
+                    if (log.isLoggable(Level.FINE)) {
+                        log.log(Level.FINE, "Found Element Issuer:     "
+                                + xmliss.getIssuerName());
+                        log.log(Level.FINE, "Found Element Serial:     "
+                                + xmliss.getSerialNumber().toString());
                     }
 
                     if (certSerial.equals(xmliss)) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("match !!! ");
+                        if (log.isLoggable(Level.FINE)) {
+                            log.log(Level.FINE, "match !!! ");
                         }
                         return cert;
                     }
-                    if (log.isDebugEnabled()) {
-                        log.debug("no match...");
+                    if (log.isLoggable(Level.FINE)) {
+                        log.log(Level.FINE, "no match...");
                     }
                 }
             }
 
             return null;
         } catch (XMLSecurityException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug("XMLSecurityException", ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "XMLSecurityException", ex);
             }
 
             throw new KeyResolverException("generic.EmptyMessage", ex);

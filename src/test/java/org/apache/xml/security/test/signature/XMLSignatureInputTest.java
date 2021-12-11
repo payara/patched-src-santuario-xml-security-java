@@ -22,6 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.c14n.CanonicalizationException;
 import org.apache.xml.security.c14n.InvalidCanonicalizerException;
@@ -36,8 +37,7 @@ import org.apache.xml.security.signature.XMLSignatureInput;
 public class XMLSignatureInputTest extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(XMLSignatureInputTest.class.getName());
+    static Logger log = Logger.getLogger(XMLSignatureInputTest.class.getName());
 
     static final String _octetStreamTextInput = "Kleiner Test";
     static final String _nodeSetInput1 =

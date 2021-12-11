@@ -20,6 +20,8 @@ package org.apache.xml.security.transforms;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.c14n.CanonicalizationException;
 import org.apache.xml.security.c14n.Canonicalizer;
@@ -98,8 +100,7 @@ public class Transforms extends SignatureElementProxy {
         = "http://www.w3.org/2002/06/xmldsig-filter2";
     
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(Transforms.class);
+    private static Logger log = Logger.getLogger(Transforms.class.getName());
 
     private Element[] transforms;
 
@@ -162,8 +163,8 @@ public class Transforms extends SignatureElementProxy {
      */
     public void addTransform(String transformURI) throws TransformationException {
         try {
-            if (log.isDebugEnabled()) {
-                log.debug("Transforms.addTransform(" + transformURI + ")");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Transforms.addTransform(" + transformURI + ")");
             }
 
             Transform transform = new Transform(this.doc, transformURI);
@@ -186,8 +187,8 @@ public class Transforms extends SignatureElementProxy {
     public void addTransform(String transformURI, Element contextElement)
        throws TransformationException {
         try {
-            if (log.isDebugEnabled()) {
-                log.debug("Transforms.addTransform(" + transformURI + ")");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Transforms.addTransform(" + transformURI + ")");
             }
 
             Transform transform = new Transform(this.doc, transformURI, contextElement);
@@ -224,8 +225,8 @@ public class Transforms extends SignatureElementProxy {
      * @param transform {@link Transform} object
      */
     private void addTransform(Transform transform) {
-        if (log.isDebugEnabled()) {
-            log.debug("Transforms.addTransform(" + transform.getURI() + ")");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Transforms.addTransform(" + transform.getURI() + ")");
         }
 
         Element transformElement = transform.getElement();
@@ -265,8 +266,8 @@ public class Transforms extends SignatureElementProxy {
             for (int i = 0; i < last; i++) {
                 Transform t = this.item(i);
                 String uri = t.getURI();
-                if (log.isDebugEnabled()) {
-                    log.debug("Perform the (" + i + ")th " + uri + " transform");
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Perform the (" + i + ")th " + uri + " transform");
                 }
                 checkSecureValidation(t);
                 xmlSignatureInput = t.performTransform(xmlSignatureInput);

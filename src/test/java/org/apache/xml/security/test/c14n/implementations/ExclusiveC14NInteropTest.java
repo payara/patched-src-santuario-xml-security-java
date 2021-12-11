@@ -19,6 +19,8 @@
 package org.apache.xml.security.test.c14n.implementations;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.signature.Reference;
 import org.apache.xml.security.signature.XMLSignature;
@@ -36,8 +38,7 @@ import org.w3c.dom.Element;
 public class ExclusiveC14NInteropTest extends InteropTestBase {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ExclusiveC14NInteropTest.class.getName());
+    static Logger log = Logger.getLogger(ExclusiveC14NInteropTest.class.getName());
 
     static {
         org.apache.xml.security.Init.init();
@@ -136,7 +137,7 @@ public class ExclusiveC14NInteropTest extends InteropTestBase {
         boolean verify =
             signature.checkSignatureValue(signature.getKeyInfo().getPublicKey());
 
-        log.debug("   signature.checkSignatureValue finished: " + verify);
+        log.log(Level.FINE, "   signature.checkSignatureValue finished: " + verify);
 
         // if (!verify) {
         StringBuffer sb = new StringBuffer();
@@ -147,7 +148,7 @@ public class ExclusiveC14NInteropTest extends InteropTestBase {
             //JavaUtils.writeBytesToFilename(directory + "/c14n-" + i + ".apache.html", signature.getSignedInfo().item(i).getHTMLRepresentation().getBytes());
 
             if (refVerify) {
-                log.debug("Reference " + i + " was OK");
+                log.log(Level.FINE, "Reference " + i + " was OK");
             } else {
                 sb.append(i + " ");
 
@@ -158,7 +159,7 @@ public class ExclusiveC14NInteropTest extends InteropTestBase {
                 int length = reference.getTransforms().getLength();
                 String algo = reference.getTransforms().item(length - 1).getURI();
 
-                log.debug("Reference " + i + " failed: " + algo);
+                log.log(Level.FINE, "Reference " + i + " failed: " + algo);
             }
         }
 

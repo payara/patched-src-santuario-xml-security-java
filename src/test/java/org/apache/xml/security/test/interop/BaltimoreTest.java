@@ -22,6 +22,9 @@ import org.apache.xml.security.test.utils.resolver.OfflineResolver;
 import org.apache.xml.security.utils.resolver.ResourceResolverSpi;
 import org.apache.xml.security.signature.XMLSignatureException;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * This test is to ensure interoperability with the examples provided by Merlin Huges
  * from Baltimore using KeyTools XML. These test vectors are located in the directory
@@ -33,8 +36,7 @@ import org.apache.xml.security.signature.XMLSignatureException;
 public class BaltimoreTest extends InteropTestBase {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(BaltimoreTest.class.getName());
+    static Logger log = Logger.getLogger(BaltimoreTest.class.getName());
 
     /** Field merlinsDir15           */
     static String merlinsDir15 =
@@ -74,7 +76,7 @@ public class BaltimoreTest extends InteropTestBase {
                                          "secret".getBytes("ASCII"));
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -97,7 +99,7 @@ public class BaltimoreTest extends InteropTestBase {
             this.verifyHMAC(filename, resolver, followManifests, hmacKey);
             fail("HMACOutputLength Exception not caught");
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         } catch (XMLSignatureException ex) {
             if (ex.getMsgID().equals("algorithms.HMACOutputLengthMin")) {
@@ -124,12 +126,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -151,12 +153,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -178,12 +180,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -205,12 +207,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -232,12 +234,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -259,12 +261,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -287,12 +289,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -318,12 +320,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (verify) {
-            log.error("Verification passed (should have failed) for " + filename);
+            log.log(Level.SEVERE, "Verification passed (should have failed) for " + filename);
         }
 
         assertFalse(filename, verify);
@@ -342,7 +344,7 @@ public class BaltimoreTest extends InteropTestBase {
                                          "secret".getBytes("ASCII"));
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -365,7 +367,7 @@ public class BaltimoreTest extends InteropTestBase {
             this.verifyHMAC(filename, resolver, followManifests, hmacKey);
             fail("HMACOutputLength Exception not caught");
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         } catch (XMLSignatureException ex) {
             if (ex.getMsgID().equals("algorithms.HMACOutputLengthMin")) {
@@ -392,12 +394,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -419,12 +421,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -446,12 +448,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -473,12 +475,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -500,12 +502,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -527,12 +529,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -555,12 +557,12 @@ public class BaltimoreTest extends InteropTestBase {
         try {
             verify = this.verify(filename, resolver, followManifests);
         } catch (RuntimeException ex) {
-            log.error("Verification crashed for " + filename);
+            log.log(Level.SEVERE, "Verification crashed for " + filename);
             throw ex;
         }
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);

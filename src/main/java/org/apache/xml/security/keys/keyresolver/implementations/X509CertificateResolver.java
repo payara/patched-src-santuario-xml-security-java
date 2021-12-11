@@ -20,6 +20,8 @@ package org.apache.xml.security.keys.keyresolver.implementations;
 
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.keys.content.x509.XMLX509Certificate;
@@ -39,8 +41,7 @@ import org.w3c.dom.Element;
 public class X509CertificateResolver extends KeyResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(X509CertificateResolver.class);
+    private static Logger log = Logger.getLogger(X509CertificateResolver.class.getName());
 
     /**
      * Method engineResolvePublicKey
@@ -100,8 +101,8 @@ public class X509CertificateResolver extends KeyResolverSpi {
             }
             return null;
         } catch (XMLSecurityException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug("XMLSecurityException", ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "XMLSecurityException", ex);
             }
             throw new KeyResolverException("generic.EmptyMessage", ex);
         }

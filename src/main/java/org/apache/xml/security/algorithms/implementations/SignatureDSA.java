@@ -29,6 +29,8 @@ import java.security.Signature;
 import java.security.SignatureException;
 import java.security.interfaces.DSAKey;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.algorithms.JCEMapper;
 import org.apache.xml.security.algorithms.SignatureAlgorithmSpi;
@@ -40,8 +42,8 @@ import org.apache.xml.security.utils.JavaUtils;
 public class SignatureDSA extends SignatureAlgorithmSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(SignatureDSA.class);
+    private static Logger log =
+            Logger.getLogger(SignatureDSA.class.getName());
 
     /** Field algorithm */
     private java.security.Signature signatureAlgorithm = null;
@@ -65,8 +67,8 @@ public class SignatureDSA extends SignatureAlgorithmSpi {
      */
     public SignatureDSA() throws XMLSignatureException {
         String algorithmID = JCEMapper.translateURItoJCEID(engineGetURI());
-        if (log.isDebugEnabled()) {
-            log.debug("Created SignatureDSA using " + algorithmID);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Created SignatureDSA using " + algorithmID);
         }
 
         String provider = JCEMapper.getProviderId();
@@ -104,8 +106,8 @@ public class SignatureDSA extends SignatureAlgorithmSpi {
     protected boolean engineVerify(byte[] signature)
         throws XMLSignatureException {
         try {
-            if (log.isDebugEnabled()) {
-                log.debug("Called DSA.verify() on " + Base64.encode(signature));
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Called DSA.verify() on " + Base64.encode(signature));
             }
 
             byte[] jcebytes = JavaUtils.convertDsaXMLDSIGtoASN1(signature,
@@ -145,8 +147,8 @@ public class SignatureDSA extends SignatureAlgorithmSpi {
             } catch (Exception e) {
                 // this shouldn't occur, but if it does, restore previous
                 // Signature
-                if (log.isDebugEnabled()) {
-                    log.debug("Exception when reinstantiating Signature:" + e);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Exception when reinstantiating Signature:" + e);
                 }
                 this.signatureAlgorithm = sig;
             }

@@ -22,6 +22,8 @@ import java.security.PublicKey;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 import org.apache.xml.security.exceptions.XMLSecurityException;
@@ -36,9 +38,7 @@ import org.w3c.dom.Element;
 public class X509SKIResolver extends KeyResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(X509SKIResolver.class);
-
+    private static Logger log = Logger.getLogger(X509SKIResolver.class.getName());
 
     /**
      * Method engineResolvePublicKey
@@ -75,12 +75,12 @@ public class X509SKIResolver extends KeyResolverSpi {
     public X509Certificate engineLookupResolveX509Certificate(
         Element element, String baseURI, StorageResolver storage
     ) throws KeyResolverException {
-        if (log.isDebugEnabled()) {
-            log.debug("Can I resolve " + element.getTagName() + "?");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Can I resolve " + element.getTagName() + "?");
         }	      
         if (!XMLUtils.elementIsInSignatureSpace(element, Constants._TAG_X509DATA)) {
-            if (log.isDebugEnabled()) {
-                log.debug("I can't");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I can't");
             }
             return null;
         }
@@ -91,8 +91,8 @@ public class X509SKIResolver extends KeyResolverSpi {
         x509childNodes = XMLUtils.selectDsNodes(element.getFirstChild(), Constants._TAG_X509SKI);
 
         if (!((x509childNodes != null) && (x509childNodes.length > 0))) {
-            if (log.isDebugEnabled()) {
-                log.debug("I can't");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I can't");
             }
             return null;
         }
@@ -102,8 +102,8 @@ public class X509SKIResolver extends KeyResolverSpi {
                 KeyResolverException ex =
                     new KeyResolverException("KeyResolver.needStorageResolver", exArgs);
 
-                if (log.isDebugEnabled()) {
-                    log.debug("", ex);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "", ex);
                 }
 
                 throw ex;
@@ -122,8 +122,8 @@ public class X509SKIResolver extends KeyResolverSpi {
 
                 for (int i = 0; i < x509childObject.length; i++) {
                     if (certSKI.equals(x509childObject[i])) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Return PublicKey from " + cert.getSubjectX500Principal().getName());
+                        if (log.isLoggable(Level.FINE)) {
+                            log.log(Level.FINE, "Return PublicKey from " + cert.getSubjectX500Principal().getName());
                         }
 
                         return cert;

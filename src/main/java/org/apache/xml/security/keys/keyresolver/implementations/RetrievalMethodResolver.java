@@ -29,6 +29,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -66,8 +68,7 @@ import org.xml.sax.SAXException;
 public class RetrievalMethodResolver extends KeyResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(RetrievalMethodResolver.class);
+    private static Logger log = Logger.getLogger(RetrievalMethodResolver.class.getName());
 
     /**
      * Method engineResolvePublicKey
@@ -104,8 +105,8 @@ public class RetrievalMethodResolver extends KeyResolverSpi {
                  if (secureValidation) {
                      String error = "Error: It is forbidden to have one RetrievalMethod "
                          + "point to another with secure validation";
-                     if (log.isDebugEnabled()) {
-                         log.debug(error);
+                     if (log.isLoggable(Level.FINE)) {
+                         log.log(Level.FINE, error);
                      }
                      return null;
                  }
@@ -113,8 +114,8 @@ public class RetrievalMethodResolver extends KeyResolverSpi {
                  XMLSignatureInput resource2 = resolveInput(rm2, baseURI, secureValidation);
                  Element e2 = obtainReferenceElement(resource2, secureValidation);
                  if (e2 == element) {
-                     if (log.isDebugEnabled()) {
-                         log.debug("Error: Can't have RetrievalMethods pointing to each other");
+                     if (log.isLoggable(Level.FINE)) {
+                         log.log(Level.FINE, "Error: Can't have RetrievalMethods pointing to each other");
                      }
                      return null;
                  }
@@ -122,24 +123,24 @@ public class RetrievalMethodResolver extends KeyResolverSpi {
             
              return resolveKey(e, baseURI, storage);
          } catch (XMLSecurityException ex) {
-             if (log.isDebugEnabled()) {
-                 log.debug("XMLSecurityException", ex);
+             if (log.isLoggable(Level.FINE)) {
+                 log.log(Level.FINE, "XMLSecurityException", ex);
              }
          } catch (CertificateException ex) {
-             if (log.isDebugEnabled()) {
-                 log.debug("CertificateException", ex);
+             if (log.isLoggable(Level.FINE)) {
+                 log.log(Level.FINE, "CertificateException", ex);
              }
          } catch (IOException ex) {
-             if (log.isDebugEnabled()) {
-                 log.debug("IOException", ex);
+             if (log.isLoggable(Level.FINE)) {
+                 log.log(Level.FINE, "IOException", ex);
              }
          } catch (ParserConfigurationException e) {
-             if (log.isDebugEnabled()) {
-                 log.debug("ParserConfigurationException", e);
+             if (log.isLoggable(Level.FINE)) {
+                 log.log(Level.FINE, "ParserConfigurationException", e);
              }
          } catch (SAXException e) {
-             if (log.isDebugEnabled()) {
-                 log.debug("SAXException", e);
+             if (log.isLoggable(Level.FINE)) {
+                 log.log(Level.FINE, "SAXException", e);
              }
          } 
          return null;
@@ -174,8 +175,8 @@ public class RetrievalMethodResolver extends KeyResolverSpi {
                 if (secureValidation) {
                     String error = "Error: It is forbidden to have one RetrievalMethod "
                         + "point to another with secure validation";
-                    if (log.isDebugEnabled()) {
-                        log.debug(error);
+                    if (log.isLoggable(Level.FINE)) {
+                        log.log(Level.FINE, error);
                     }
                     return null;
                 }
@@ -183,8 +184,8 @@ public class RetrievalMethodResolver extends KeyResolverSpi {
                 XMLSignatureInput resource2 = resolveInput(rm2, baseURI, secureValidation);
                 Element e2 = obtainReferenceElement(resource2, secureValidation);
                 if (e2 == element) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Error: Can't have RetrievalMethods pointing to each other");
+                    if (log.isLoggable(Level.FINE)) {
+                        log.log(Level.FINE, "Error: Can't have RetrievalMethods pointing to each other");
                     }
                     return null;
                 }
@@ -192,24 +193,24 @@ public class RetrievalMethodResolver extends KeyResolverSpi {
             
             return resolveCertificate(e, baseURI, storage);
         } catch (XMLSecurityException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug("XMLSecurityException", ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "XMLSecurityException", ex);
             }
         } catch (CertificateException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug("CertificateException", ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "CertificateException", ex);
             }
         } catch (IOException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug("IOException", ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "IOException", ex);
             }
         } catch (ParserConfigurationException e) {
-            if (log.isDebugEnabled()) {
-                log.debug("ParserConfigurationException", e);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "ParserConfigurationException", e);
             }
         } catch (SAXException e) {
-            if (log.isDebugEnabled()) {
-                log.debug("SAXException", e);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "SAXException", e);
             }
         } 
         return null;
@@ -226,9 +227,9 @@ public class RetrievalMethodResolver extends KeyResolverSpi {
     private static X509Certificate resolveCertificate(
         Element e, String baseURI, StorageResolver storage
     ) throws KeyResolverException {
-        if (log.isDebugEnabled()) {
-            log.debug("Now we have a {" + e.getNamespaceURI() + "}"
-                + e.getLocalName() + " Element");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Now we have a {" + e.getNamespaceURI() + "}"
+                    + e.getLocalName() + " Element");
         }
         // An element has been provided
         if (e != null) { 
@@ -248,9 +249,9 @@ public class RetrievalMethodResolver extends KeyResolverSpi {
     private static PublicKey resolveKey(
         Element e, String baseURI, StorageResolver storage
     ) throws KeyResolverException {
-        if (log.isDebugEnabled()) {
-            log.debug("Now we have a {" + e.getNamespaceURI() + "}"
-                + e.getLocalName() + " Element");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Now we have a {" + e.getNamespaceURI() + "}"
+                    + e.getLocalName() + " Element");
         }
         // An element has been provided
         if (e != null) { 
@@ -273,8 +274,8 @@ public class RetrievalMethodResolver extends KeyResolverSpi {
             byte inputBytes[] = resource.getBytes();
             e = getDocFromBytes(inputBytes, secureValidation);
             // otherwise, we parse the resource, create an Element and delegate
-            if (log.isDebugEnabled()) {
-                log.debug("we have to parse " + inputBytes.length + " bytes");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "we have to parse " + inputBytes.length + " bytes");
             }
         }
         return e;
@@ -305,8 +306,8 @@ public class RetrievalMethodResolver extends KeyResolverSpi {
         ResourceResolver resRes = ResourceResolver.getInstance(uri, baseURI, secureValidation);
         XMLSignatureInput resource = resRes.resolve(uri, baseURI, secureValidation);
         if (transforms != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("We have Transforms");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "We have Transforms");
             }
             resource = transforms.performTransforms(resource);
         }		  

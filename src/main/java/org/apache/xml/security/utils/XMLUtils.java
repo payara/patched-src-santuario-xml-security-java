@@ -27,6 +27,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -66,8 +68,7 @@ public class XMLUtils {
     private static volatile String xenc11Prefix = "xenc11";
     
     /** {@link org.apache.commons.logging} logging facility */
-    private static final org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(XMLUtils.class);
+    private static final Logger log = Logger.getLogger(XMLUtils.class.getName());
 
 
     /**
@@ -216,17 +217,17 @@ public class XMLUtils {
                 Canonicalizer.ALGO_ID_C14N_WITH_COMMENTS).canonicalizeSubtree(contextNode)
             );
         } catch (IOException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug(ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, ex.toString());
             }
         }
         catch (InvalidCanonicalizerException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug(ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, ex.toString());
             }
         } catch (CanonicalizationException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug(ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, ex.toString());
             }
         }
     }
@@ -250,18 +251,18 @@ public class XMLUtils {
                 Canonicalizer.ALGO_ID_C14N_WITH_COMMENTS).canonicalizeSubtree(contextNode)
             );
         } catch (IOException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug(ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, ex.toString());
             }
             // throw new RuntimeException(ex.getMessage());
         } catch (InvalidCanonicalizerException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug(ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, ex.toString());
             }
             // throw new RuntimeException(ex.getMessage());
         } catch (CanonicalizationException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug(ex);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, ex.toString());
             }
             // throw new RuntimeException(ex.getMessage());
         }
@@ -952,7 +953,7 @@ public class XMLUtils {
                                 // Continue searching to find duplicates
                                 foundElement = attr.getOwnerElement();
                             } else {
-                                log.debug("Multiple elements with the same 'Id' attribute value!");
+                                log.log(Level.FINE, "Multiple elements with the same 'Id' attribute value!");
                                 return false;
                             }
                         }
@@ -1008,7 +1009,7 @@ public class XMLUtils {
                     for (int i = 0; i < attributes.getLength(); i++) {
                         Attr attr = (Attr)attributes.item(i);
                         if (attr.isId() && id.equals(attr.getValue()) && se != knownElement) {
-                            log.debug("Multiple elements with the same 'Id' attribute value!");
+                            log.log(Level.FINE, "Multiple elements with the same 'Id' attribute value!");
                             return false;
                         }
                     }

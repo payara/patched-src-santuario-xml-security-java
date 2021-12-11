@@ -20,6 +20,8 @@ package org.apache.xml.security.keys.content.x509;
 
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.utils.Base64;
@@ -37,8 +39,8 @@ import org.w3c.dom.Element;
 public class XMLX509SKI extends SignatureElementProxy implements XMLX509DataContent {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(XMLX509SKI.class);
+    private static Logger log =
+            Logger.getLogger(XMLX509SKI.class.getName());
 
     /**
      * <CODE>SubjectKeyIdentifier (id-ce-subjectKeyIdentifier) (2.5.29.14)</CODE>:
@@ -134,8 +136,8 @@ public class XMLX509SKI extends SignatureElementProxy implements XMLX509DataCont
 
         System.arraycopy(extensionValue, 4, skidValue, 0, skidValue.length);
 
-        if (log.isDebugEnabled()) {
-            log.debug("Base64 of SKI is " + Base64.encode(skidValue));
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Base64 of SKI is " + Base64.encode(skidValue));
         }
 
         return skidValue;
@@ -164,8 +166,8 @@ public class XMLX509SKI extends SignatureElementProxy implements XMLX509DataCont
                 result = 31 * result + bytes[i];
             }
         } catch (XMLSecurityException e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, e.toString());
             }
         }
         return result;

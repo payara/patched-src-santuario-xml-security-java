@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -36,8 +38,7 @@ import org.xml.sax.InputSource;
 public class TestVectorResolver implements EntityResolver {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(TestVectorResolver.class.getName());
+    static Logger log = Logger.getLogger(TestVectorResolver.class.getName());
     
     /** Field alreadyInitialized */
     static boolean alreadyInitialized = false;
@@ -85,7 +86,7 @@ public class TestVectorResolver implements EntityResolver {
                             org.apache.xml.security.utils.JavaUtils.getBytesFromStream(zis);
 
                         TestVectorResolver.vectors.put(ze.getName(), data);
-                        log.debug("Contents of " + thisClass + "/" + testVectorFile
+                        log.log(Level.FINE, "Contents of " + thisClass + "/" + testVectorFile
                                   + "#" + ze.getName() + " " + data.length + " bytes");
                     }
                 }
@@ -168,7 +169,7 @@ public class TestVectorResolver implements EntityResolver {
 
         this._firstEntitySystemIdDirectory = getFilePath(systemId);
 
-        log.debug("this._firstEntitySystemIdDirectory = "
+        log.log(Level.FINE, "this._firstEntitySystemIdDirectory = "
                   + this._firstEntitySystemIdDirectory);
     }
 
@@ -187,7 +188,7 @@ public class TestVectorResolver implements EntityResolver {
 
             systemId = this.getFileName(systemId);
 
-            log.debug("publicId=\"" + publicId + "\" systemId=\"" + systemId
+            log.log(Level.FINE, "publicId=\"" + publicId + "\" systemId=\"" + systemId
                       + "\"");
 
             // InputStream result = this.getInputStream(systemId);

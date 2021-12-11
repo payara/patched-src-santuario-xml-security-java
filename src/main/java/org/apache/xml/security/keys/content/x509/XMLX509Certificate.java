@@ -24,6 +24,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.utils.Constants;
@@ -150,8 +151,8 @@ public class XMLX509Certificate extends SignatureElementProxy implements XMLX509
                 result = 31 * result + bytes[i];
             }
         } catch (XMLSecurityException e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, e.toString());
             }
         }
         return result;

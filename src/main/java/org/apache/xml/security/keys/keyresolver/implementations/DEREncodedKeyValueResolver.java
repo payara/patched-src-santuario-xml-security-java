@@ -21,6 +21,8 @@ package org.apache.xml.security.keys.keyresolver.implementations;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
 
@@ -42,8 +44,8 @@ import org.w3c.dom.Element;
 public class DEREncodedKeyValueResolver extends KeyResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(DEREncodedKeyValueResolver.class);
+    private static Logger log =
+            Logger.getLogger(DEREncodedKeyValueResolver.class.getName());
 
     /** {@inheritDoc}. */
     public boolean engineCanResolve(Element element, String baseURI, StorageResolver storage) {
@@ -54,8 +56,8 @@ public class DEREncodedKeyValueResolver extends KeyResolverSpi {
     public PublicKey engineLookupAndResolvePublicKey(Element element, String baseURI, StorageResolver storage)
         throws KeyResolverException {
 
-        if (log.isDebugEnabled()) {
-            log.debug("Can I resolve " + element.getTagName());
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Can I resolve " + element.getTagName());
         }
 
         if (!engineCanResolve(element, baseURI, storage)) {
@@ -66,8 +68,8 @@ public class DEREncodedKeyValueResolver extends KeyResolverSpi {
             DEREncodedKeyValue derKeyValue = new DEREncodedKeyValue(element, baseURI);
             return derKeyValue.getPublicKey();
         } catch (XMLSecurityException e) {
-            if (log.isDebugEnabled()) {
-                log.debug("XMLSecurityException", e);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "XMLSecurityException", e);
             }
         }
 

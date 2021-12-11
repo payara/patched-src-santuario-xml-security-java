@@ -19,6 +19,8 @@
 package org.apache.xml.security.encryption;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.c14n.CanonicalizationException;
 import org.apache.xml.security.utils.resolver.ResourceResolver;
@@ -45,8 +47,7 @@ import org.apache.xml.security.utils.Base64;
  */
 public class XMLCipherInput {
 
-    private static org.apache.commons.logging.Log logger = 
-        org.apache.commons.logging.LogFactory.getLog(XMLCipherInput.class);
+    private static Logger log = Logger.getLogger(XMLCipherInput.class.getName());
 
     /** The data we are working with */
     private CipherData cipherData;
@@ -115,8 +116,8 @@ public class XMLCipherInput {
 
         if (cipherData.getDataType() == CipherData.REFERENCE_TYPE) {
             // Fun time!
-            if (logger.isDebugEnabled()) {
-                logger.debug("Found a reference type CipherData");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Found a reference type CipherData");
             }
             CipherReference cr = cipherData.getCipherReference();
 
@@ -135,20 +136,20 @@ public class XMLCipherInput {
             } 
 
             if (input != null) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Managed to resolve URI \"" + cr.getURI() + "\"");
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Managed to resolve URI \"" + cr.getURI() + "\"");
                 }
             } else {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Failed to resolve URI \"" + cr.getURI() + "\"");
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Failed to resolve URI \"" + cr.getURI() + "\"");
                 }
             }
 
             // Lets see if there are any transforms
             Transforms transforms = cr.getTransforms();
             if (transforms != null) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Have transforms in cipher reference");
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Have transforms in cipher reference");
                 }
                 try {
                     org.apache.xml.security.transforms.Transforms dsTransforms =
@@ -175,8 +176,8 @@ public class XMLCipherInput {
             throw new XMLEncryptionException("CipherData.getDataType() returned unexpected value");
         }
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("Encrypted octets:\n" + base64EncodedEncryptedOctets);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Encrypted octets:\n" + base64EncodedEncryptedOctets);
         }
 
         try {

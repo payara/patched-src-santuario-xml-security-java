@@ -27,6 +27,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Handles barename XPointer Reference URIs.
  * <BR />
@@ -40,13 +43,12 @@ import org.w3c.dom.Node;
  * nodes of the parse tree (all descendants, plus all attributes,
  * plus all namespaces nodes).
  *
- * @author $Author$
+ * @author $Author: coheigea $
  */
 public class ResolverXPointer extends ResourceResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ResolverXPointer.class);
+    private static Logger log = Logger.getLogger(ResolverXPointer.class.getName());
     
     private static final String XP = "#xpointer(id(";
     private static final int XP_LENGTH = XP.length();
@@ -145,8 +147,8 @@ public class ResolverXPointer extends ResourceResolverSpi {
             int idLen = idPlusDelim.length() -1;
             if (((idPlusDelim.charAt(0) == '"') && (idPlusDelim.charAt(idLen) == '"')) 
                 || ((idPlusDelim.charAt(0) == '\'') && (idPlusDelim.charAt(idLen) == '\''))) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Id = " + idPlusDelim.substring(1, idLen));
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Id = " + idPlusDelim.substring(1, idLen));
                 }
                 return true;
             }

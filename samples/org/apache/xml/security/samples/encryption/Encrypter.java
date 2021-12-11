@@ -49,9 +49,7 @@ import javax.xml.transform.OutputKeys;
 public class Encrypter {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(
-            Encrypter.class.getName());
+    static Logger log = Logger.getLogger(Encrypter.class.getName());
 
     static {
         org.apache.xml.security.Init.init();

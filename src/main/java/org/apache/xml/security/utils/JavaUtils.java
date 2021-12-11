@@ -25,6 +25,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.SecurityPermission;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A collection of different, general-purpose methods for JAVA-specific things
@@ -33,8 +35,7 @@ import java.security.SecurityPermission;
 public class JavaUtils {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(JavaUtils.class);
+    private static Logger log = Logger.getLogger(JavaUtils.class.getName());
 
     private static final SecurityPermission REGISTER_PERMISSION =
         new SecurityPermission("org.apache.xml.security.register");
@@ -99,8 +100,8 @@ public class JavaUtils {
                 fos.write(bytes);
                 fos.close();
             } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("writeBytesToFilename got null byte[] pointed");
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "writeBytesToFilename got null byte[] pointed");
                 }
             }
         } catch (IOException ex) {
@@ -108,8 +109,8 @@ public class JavaUtils {
                 try {
                     fos.close();
                 } catch (IOException ioe) {
-                    if (log.isDebugEnabled()) {
-                        log.debug(ioe);
+                    if (log.isLoggable(Level.FINE)) {
+                        log.log(Level.FINE, ioe.toString());
                     }
                 }
             }

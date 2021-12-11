@@ -21,6 +21,9 @@ package org.apache.xml.security.test.interop;
 
 import org.apache.xml.security.utils.resolver.ResourceResolverSpi;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  * This test is to ensure interoperability with the examples provided by Blake Dournaee
@@ -33,8 +36,7 @@ import org.apache.xml.security.utils.resolver.ResourceResolverSpi;
 public class RSASecurityTest extends InteropTestBase {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(RSASecurityTest.class.getName());
+    static Logger log = Logger.getLogger(RSASecurityTest.class.getName());
 
     /** Field blakesDir           */
     static String blakesDir =
@@ -64,7 +66,7 @@ public class RSASecurityTest extends InteropTestBase {
         boolean verify = this.verify(filename, resolver, followManifests);
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);
@@ -79,7 +81,7 @@ public class RSASecurityTest extends InteropTestBase {
         boolean verify = this.verify(filename, resolver, followManifests);
 
         if (!verify) {
-            log.error("Verification failed for " + filename);
+            log.log(Level.SEVERE, "Verification failed for " + filename);
         }
 
         assertTrue(filename, verify);

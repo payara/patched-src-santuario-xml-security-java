@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.xml.security.c14n.CanonicalizationException;
@@ -67,8 +69,7 @@ import org.xml.sax.SAXException;
 public final class Transform extends SignatureElementProxy {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(Transform.class);
+    private static Logger log = Logger.getLogger(Transform.class.getName());
 
     /** All available Transform classes are registered here */
     private static Map<String, Class<? extends TransformSpi>> transformSpiHash = 
@@ -357,10 +358,10 @@ public final class Transform extends SignatureElementProxy {
             );
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("Create URI \"" + algorithmURI + "\" class \""
-                      + newTransformSpi.getClass() + "\"");
-            log.debug("The NodeList is " + contextNodes);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Create URI \"" + algorithmURI + "\" class \""
+                    + newTransformSpi.getClass() + "\"");
+            log.log(Level.FINE, "The NodeList is " + contextNodes);
         }
 
         // give it to the current document

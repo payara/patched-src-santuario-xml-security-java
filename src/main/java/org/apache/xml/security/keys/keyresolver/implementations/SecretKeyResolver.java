@@ -23,6 +23,8 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.SecretKey;
 import org.apache.xml.security.keys.keyresolver.KeyResolverException;
 import org.apache.xml.security.keys.keyresolver.KeyResolverSpi;
@@ -38,8 +40,8 @@ import org.w3c.dom.Element;
 public class SecretKeyResolver extends KeyResolverSpi
 {
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(SecretKeyResolver.class.getName());
+    private static Logger log =
+            Logger.getLogger(SecretKeyResolver.class.getName());
 
     private KeyStore keyStore;
     private char[] password;
@@ -106,8 +108,8 @@ public class SecretKeyResolver extends KeyResolverSpi
     public SecretKey engineResolveSecretKey(
         Element element, String baseURI, StorageResolver storage
     ) throws KeyResolverException {
-        if (log.isDebugEnabled()) {
-            log.debug("Can I resolve " + element.getTagName() + "?");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Can I resolve " + element.getTagName() + "?");
         }
 
         if (XMLUtils.elementIsInSignatureSpace(element, Constants._TAG_KEYNAME)) {
@@ -118,11 +120,11 @@ public class SecretKeyResolver extends KeyResolverSpi
                     return (SecretKey) key;
                 }
             } catch (Exception e) {
-                log.debug("Cannot recover the key", e);
+                log.log(Level.FINE, "Cannot recover the key", e);
             }
         }
 
-        log.debug("I can't");
+        log.log(Level.FINE, "I can't");
         return null;
     }
 

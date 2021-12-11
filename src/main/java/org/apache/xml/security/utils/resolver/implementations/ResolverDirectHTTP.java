@@ -28,6 +28,8 @@ import java.net.URISyntaxException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.signature.XMLSignatureInput;
 import org.apache.xml.security.utils.Base64;
@@ -58,8 +60,7 @@ import org.apache.xml.security.utils.resolver.ResourceResolverSpi;
 public class ResolverDirectHTTP extends ResourceResolverSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ResolverDirectHTTP.class);
+    private static Logger log = Logger.getLogger(ResolverDirectHTTP.class.getName());
 
     /** Field properties[] */
     private static final String properties[] = { 
@@ -147,8 +148,8 @@ public class ResolverDirectHTTP extends ResourceResolverSpi {
                 summarized += read;
             }
 
-            if (log.isDebugEnabled()) {
-                log.debug("Fetched " + summarized + " bytes from URI " + uriNew.toString());
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "Fetched " + summarized + " bytes from URI " + uriNew.toString());
             }
 
             XMLSignatureInput result = new XMLSignatureInput(baos.toByteArray());
@@ -171,8 +172,8 @@ public class ResolverDirectHTTP extends ResourceResolverSpi {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    if (log.isDebugEnabled()) {
-                        log.debug(e.getMessage(), e);
+                    if (log.isLoggable(Level.FINE)) {
+                        log.log(Level.FINE, e.getMessage(), e);
                     }
                 }
             }
@@ -222,33 +223,33 @@ public class ResolverDirectHTTP extends ResourceResolverSpi {
      */
     public boolean engineCanResolveURI(ResourceResolverContext context) {
         if (context.uriToResolve == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("quick fail, uri == null");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "quick fail, uri == null");
             }
             return false;
         }
 
         if (context.uriToResolve.equals("") || (context.uriToResolve.charAt(0)=='#')) {
-            if (log.isDebugEnabled()) {
-                log.debug("quick fail for empty URIs and local ones");
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "quick fail for empty URIs and local ones");
             }
             return false;
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("I was asked whether I can resolve " + context.uriToResolve);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "I was asked whether I can resolve " + context.uriToResolve);
         }
 
         if (context.uriToResolve.startsWith("http:") ||
             (context.baseUri != null && context.baseUri.startsWith("http:") )) {
-            if (log.isDebugEnabled()) {
-                log.debug("I state that I can resolve " + context.uriToResolve);
+            if (log.isLoggable(Level.FINE)) {
+                log.log(Level.FINE, "I state that I can resolve " + context.uriToResolve);
             }
             return true;
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("I state that I can't resolve " + context.uriToResolve);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "I state that I can't resolve " + context.uriToResolve);
         }
 
         return false;

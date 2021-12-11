@@ -21,6 +21,8 @@ package org.apache.xml.security.utils;
 import java.math.BigInteger;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.exceptions.Base64DecodingException;
 import org.apache.xml.security.exceptions.XMLSecurityException;
@@ -37,8 +39,7 @@ import org.w3c.dom.Text;
  */
 public abstract class ElementProxy {
 
-    protected static final org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(ElementProxy.class);
+    protected static final Logger log = Logger.getLogger(ElementProxy.class.getName());
 
     /** Field constructionElement */
     protected Element constructionElement = null;
@@ -86,8 +87,8 @@ public abstract class ElementProxy {
             throw new XMLSecurityException("ElementProxy.nullElement");
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("setElement(\"" + element.getTagName() + "\", \"" + BaseURI + "\")");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "setElement(\"" + element.getTagName() + "\", \"" + BaseURI + "\")");
         }
 
         this.doc = element.getOwnerDocument();
@@ -176,8 +177,8 @@ public abstract class ElementProxy {
             throw new XMLSecurityException("ElementProxy.nullElement");
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("setElement(" + element.getTagName() + ", \"" + BaseURI + "\"");
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "setElement(" + element.getTagName() + ", \"" + BaseURI + "\"");
         }
 
         this.doc = element.getOwnerDocument();

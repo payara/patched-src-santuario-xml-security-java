@@ -23,6 +23,8 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
@@ -41,8 +43,8 @@ import org.w3c.dom.Text;
 public abstract class IntegrityHmac extends SignatureAlgorithmSpi {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(IntegrityHmac.class);
+    private static Logger log =
+        Logger.getLogger(IntegrityHmac.class.getName());
 
     /** Field macAlgorithm */
     private Mac macAlgorithm = null;
@@ -70,8 +72,8 @@ public abstract class IntegrityHmac extends SignatureAlgorithmSpi {
      */
     public IntegrityHmac() throws XMLSignatureException {
         String algorithmID = JCEMapper.translateURItoJCEID(this.engineGetURI());
-        if (log.isDebugEnabled()) {
-            log.debug("Created IntegrityHmacSHA1 using " + algorithmID);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Created IntegrityHmacSHA1 using " + algorithmID);
         }
 
         try {
@@ -112,8 +114,8 @@ public abstract class IntegrityHmac extends SignatureAlgorithmSpi {
     protected boolean engineVerify(byte[] signature) throws XMLSignatureException {
         try {
             if (this.HMACOutputLengthSet && this.HMACOutputLength < getDigestLength()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("HMACOutputLength must not be less than " + getDigestLength());
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "HMACOutputLength must not be less than " + getDigestLength());
                 }
                 Object[] exArgs = { String.valueOf(getDigestLength()) };
                 throw new XMLSignatureException("algorithms.HMACOutputLengthMin", exArgs);
@@ -155,8 +157,8 @@ public abstract class IntegrityHmac extends SignatureAlgorithmSpi {
                 this.macAlgorithm = Mac.getInstance(macAlgorithm.getAlgorithm());
             } catch (Exception e) {
                 // this shouldn't occur, but if it does, restore previous Mac
-                if (log.isDebugEnabled()) {
-                    log.debug("Exception when reinstantiating Mac:" + e);
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "Exception when reinstantiating Mac:" + e);
                 }
                 this.macAlgorithm = mac;
             }
@@ -174,8 +176,8 @@ public abstract class IntegrityHmac extends SignatureAlgorithmSpi {
     protected byte[] engineSign() throws XMLSignatureException {
         try {
             if (this.HMACOutputLengthSet && this.HMACOutputLength < getDigestLength()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("HMACOutputLength must not be less than " + getDigestLength());
+                if (log.isLoggable(Level.FINE)) {
+                    log.log(Level.FINE, "HMACOutputLength must not be less than " + getDigestLength());
                 }
                 Object[] exArgs = { String.valueOf(getDigestLength()) };
                 throw new XMLSignatureException("algorithms.HMACOutputLengthMin", exArgs);

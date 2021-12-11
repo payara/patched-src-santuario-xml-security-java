@@ -20,6 +20,8 @@ package org.apache.xml.security.keys.content.x509;
 
 import java.math.BigInteger;
 import java.security.cert.X509Certificate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.utils.Constants;
@@ -32,8 +34,8 @@ import org.w3c.dom.Element;
 public class XMLX509IssuerSerial extends SignatureElementProxy implements XMLX509DataContent {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(XMLX509IssuerSerial.class);
+    private static Logger log =
+            Logger.getLogger(XMLX509IssuerSerial.class.getName());
 
     /**
      * Constructor XMLX509IssuerSerial
@@ -104,8 +106,8 @@ public class XMLX509IssuerSerial extends SignatureElementProxy implements XMLX50
     public BigInteger getSerialNumber() {
         String text = 
             this.getTextFromChildElement(Constants._TAG_X509SERIALNUMBER, Constants.SignatureSpecNS);
-        if (log.isDebugEnabled()) {
-            log.debug("X509SerialNumber text: " + text);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "X509SerialNumber text: " + text);
         }
 
         return new BigInteger(text);

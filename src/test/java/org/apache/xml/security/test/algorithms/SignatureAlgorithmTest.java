@@ -20,6 +20,8 @@ package org.apache.xml.security.test.algorithms;
 
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.algorithms.SignatureAlgorithm;
 import org.apache.xml.security.exceptions.XMLSecurityException;
@@ -30,8 +32,8 @@ import org.w3c.dom.Document;
 public class SignatureAlgorithmTest extends org.junit.Assert {
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(SignatureAlgorithmTest.class.getName());
+    static Logger log =
+        Logger.getLogger(SignatureAlgorithmTest.class.getName());
 
     static {
         org.apache.xml.security.Init.init();
@@ -52,7 +54,7 @@ public class SignatureAlgorithmTest extends org.junit.Assert {
         try {
             otherSignatureAlgorithm.initSign(pk);
         } catch (XMLSecurityException ex) {
-            log.warn(
+            log.log(Level.WARNING,
                 "Test testSameKeySeveralAlgorithmSigning skipped as necessary algorithms "
                 + "not available"
             );

@@ -20,6 +20,8 @@ package org.apache.xml.security.algorithms;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xml.security.encryption.XMLCipher;
 import org.apache.xml.security.signature.XMLSignature;
@@ -33,8 +35,8 @@ import org.w3c.dom.Element;
 public class JCEMapper {
 
     /** {@link org.apache.commons.logging} logging facility */
-    private static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(JCEMapper.class);
+    private static Logger log =
+            Logger.getLogger(JCEMapper.class.getName());
 
     private static Map<String, Algorithm> algorithmsMap = 
         new ConcurrentHashMap<String, Algorithm>();
@@ -242,8 +244,8 @@ public class JCEMapper {
      * @return the JCE standard name corresponding to the given URI
      */
     public static String translateURItoJCEID(String algorithmURI) {
-        if (log.isDebugEnabled()) {
-            log.debug("Request for URI " + algorithmURI);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Request for URI " + algorithmURI);
         }
 
         Algorithm algorithm = algorithmsMap.get(algorithmURI);
@@ -259,8 +261,8 @@ public class JCEMapper {
      * @return the class name that implements this algorithm
      */
     public static String getAlgorithmClassFromURI(String algorithmURI) {
-        if (log.isDebugEnabled()) {
-            log.debug("Request for URI " + algorithmURI);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Request for URI " + algorithmURI);
         }
 
         Algorithm algorithm = algorithmsMap.get(algorithmURI);
@@ -277,8 +279,8 @@ public class JCEMapper {
      * @return The length of the key used in the algorithm
      */
     public static int getKeyLengthFromURI(String algorithmURI) {
-        if (log.isDebugEnabled()) {
-            log.debug("Request for URI " + algorithmURI);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Request for URI " + algorithmURI);
         }
         Algorithm algorithm = algorithmsMap.get(algorithmURI);
         if (algorithm != null) {
@@ -294,8 +296,8 @@ public class JCEMapper {
      * @return The KeyAlgorithm for the given URI.
      */
     public static String getJCEKeyAlgorithmFromURI(String algorithmURI) {
-        if (log.isDebugEnabled()) {
-            log.debug("Request for URI " + algorithmURI);
+        if (log.isLoggable(Level.FINE)) {
+            log.log(Level.FINE, "Request for URI " + algorithmURI);
         }
         Algorithm algorithm = algorithmsMap.get(algorithmURI);
         if (algorithm != null) {

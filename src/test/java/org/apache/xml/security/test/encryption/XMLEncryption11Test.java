@@ -30,6 +30,8 @@ import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -72,8 +74,7 @@ public class XMLEncryption11Test extends org.junit.Assert {
     private boolean haveISOPadding;
 
     /** {@link org.apache.commons.logging} logging facility */
-    static org.apache.commons.logging.Log log = 
-        org.apache.commons.logging.LogFactory.getLog(XMLEncryption11Test.class.getName());
+    static Logger log = Logger.getLogger(XMLEncryption11Test.class.getName());
 
     /**
      *  Constructor XMLEncryption11Test
@@ -170,7 +171,7 @@ public class XMLEncryption11Test extends org.junit.Assert {
             // XMLUtils.outputDOM(dd.getFirstChild(), System.out);
             checkDecryptedDoc(dd, true);
         } else {
-            log.warn(
+            log.log(Level.WARNING,
                 "Skipping testRSA2048 as necessary "
                 + "crypto algorithms are not available"
             );
@@ -235,7 +236,7 @@ public class XMLEncryption11Test extends org.junit.Assert {
             // XMLUtils.outputDOM(dd.getFirstChild(), System.out);
             checkDecryptedDoc(dd, true);
         } else {
-            log.warn(
+            log.log(Level.WARNING,
                 "Skipping testRSA2048 as necessary "
                 + "crypto algorithms are not available"
             );
@@ -272,7 +273,7 @@ public class XMLEncryption11Test extends org.junit.Assert {
             // XMLUtils.outputDOM(dd.getFirstChild(), System.out);
             checkDecryptedDoc(dd, true);
         } else {
-            log.warn(
+            log.log(Level.WARNING,
                 "Skipping testRSA3072 as necessary "
                 + "crypto algorithms are not available"
             );
@@ -337,7 +338,7 @@ public class XMLEncryption11Test extends org.junit.Assert {
             // XMLUtils.outputDOM(dd.getFirstChild(), System.out);
             checkDecryptedDoc(dd, true);
         } else {
-            log.warn(
+            log.log(Level.WARNING,
                 "Skipping testRSA3072 as necessary "
                 + "crypto algorithms are not available"
             );
@@ -374,7 +375,7 @@ public class XMLEncryption11Test extends org.junit.Assert {
             // XMLUtils.outputDOM(dd.getFirstChild(), System.out);
             checkDecryptedDoc(dd, true);
         } else {
-            log.warn(
+            log.log(Level.WARNING,
                 "Skipping testRSA307OAEP as necessary "
                 + "crypto algorithms are not available"
             );
@@ -439,7 +440,7 @@ public class XMLEncryption11Test extends org.junit.Assert {
             // XMLUtils.outputDOM(dd.getFirstChild(), System.out);
             checkDecryptedDoc(dd, true);
         } else {
-            log.warn(
+            log.log(Level.WARNING,
                 "Skipping testRSA2048 as necessary "
                 + "crypto algorithms are not available"
             );
@@ -476,7 +477,7 @@ public class XMLEncryption11Test extends org.junit.Assert {
             // XMLUtils.outputDOM(dd.getFirstChild(), System.out);
             checkDecryptedDoc(dd, true);
         } else {
-            log.warn(
+            log.log(Level.WARNING,
                 "Skipping testRSA4096 as necessary "
                 + "crypto algorithms are not available"
             );
@@ -541,7 +542,7 @@ public class XMLEncryption11Test extends org.junit.Assert {
             // XMLUtils.outputDOM(dd.getFirstChild(), System.out);
             checkDecryptedDoc(dd, true);
         } else {
-            log.warn(
+            log.log(Level.WARNING,
                 "Skipping testRSA2048 as necessary "
                 + "crypto algorithms are not available"
             );
@@ -749,7 +750,7 @@ public class XMLEncryption11Test extends org.junit.Assert {
     private void checkDecryptedDoc(Document d, boolean doNodeCheck) throws Exception {
 
         String cc = retrieveCCNumber(d);
-        log.debug("Retrieved Credit Card : " + cc);
+        log.log(Level.FINE, "Retrieved Credit Card : " + cc);
         assertTrue(cc, ((cc!= null) && (cc.equals(cardNumber))));
 
         // Test cc numbers
