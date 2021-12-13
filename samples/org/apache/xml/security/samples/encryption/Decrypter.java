@@ -47,7 +47,6 @@ import javax.xml.transform.OutputKeys;
  */
 public class Decrypter {
 
-    /** {@link org.apache.commons.logging} logging facility */
     static Logger log = Logger.getLogger(Decrypter.class.getName());
 
     static {
